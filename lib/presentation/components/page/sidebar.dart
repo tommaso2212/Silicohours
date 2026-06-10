@@ -58,6 +58,7 @@ class _SidebarRoutes extends StatelessWidget {
     HomeRoute.pagePath => Icon(Icons.home_outlined),
     UserRoute.pagePath => Icon(Icons.people_outline_rounded),
     ProjectRoute.pagePath => Icon(Icons.folder_outlined),
+    TimeLogRoute.pagePath => Icon(Icons.access_time_outlined),
     String() => null,
   };
 

@@ -4,6 +4,7 @@ export 'screens/home/home_screen.dart';
 export 'screens/user/user_screen.dart';
 export 'screens/project/project_screen.dart';
 export 'screens/project_detail/project_detail_screen.dart';
+export 'screens/time_log/time_log_screen.dart';
 export 'theme/app_theme.dart';
 export 'theme/app_colors.dart';
 export 'theme/app_spacing.dart';
