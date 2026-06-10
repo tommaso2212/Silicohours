@@ -42,3 +42,12 @@ UpdateProjectUsecase updateProjectUsecase(Ref ref) {
     errorHandlers: [ref.dialogExceptionHandler()],
   );
 }
+
+@Riverpod(keepAlive: true)
+CreateProjectUsecase createProjectUsecase(Ref ref) {
+  return CreateProjectUsecase(
+    projectRepository: ref.watch(projectRepositoryProvider),
+    successHandlers: [ref.dialogSuccessHandler(), (_, _) async => ref.invalidate(fetchProjectsProvider)],
+    errorHandlers: [ref.dialogExceptionHandler()],
+  );
+}

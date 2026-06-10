@@ -43,9 +43,11 @@ class AppTheme {
         shape: const RoundedRectangleBorder(borderRadius: borderRadius),
       ),
     ),
-    inputDecorationTheme: const InputDecorationTheme(
-      //filled: true,
-      //fillColor: AppColors.surfaceVariant,
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: WidgetStateTextStyle.resolveWith((states) {
+        if (states.contains(WidgetState.error)) return TextStyle(color: AppColors.error);
+        return TextStyle();
+      }),
       border: OutlineInputBorder(
         borderRadius: borderRadius,
         borderSide: BorderSide(color: AppColors.surfaceVariant),
@@ -54,6 +56,10 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: borderRadius,
         borderSide: BorderSide(color: AppColors.primary),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(color: AppColors.error),
       ),
     ),
     dividerTheme: const DividerThemeData(color: AppColors.surfaceVariant),
