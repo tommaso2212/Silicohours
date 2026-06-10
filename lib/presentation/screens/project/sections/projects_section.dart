@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/components/components.dart';
+import 'package:silicohours/presentation/router/routes.dart';
 import 'package:silicohours/presentation/screens/project/components/edit_project_dialog.dart';
 import 'package:silicohours/presentation/screens/project/components/project_card.dart';
 import 'package:silicohours/presentation/screens/project/controller/project_section_controller.dart';
@@ -24,6 +26,7 @@ class ProjectsSection extends ConsumerWidget {
         fetchItems: fetchItems,
         itemBuilder: (item) => ProjectCard(
           project: item,
+          onTap: () => context.go(ProjectRoute.pathForDetails(item.id)),
           actionMenu: _ProjectActionMenu(project: item),
         ),
       ),
@@ -34,6 +37,7 @@ class ProjectsSection extends ConsumerWidget {
             fetchItems: fetchItems,
             columnsNumber: _columns.length,
             headerBuilder: (index) => Text(_columns[index]),
+            onRowTap: (item) => context.go(ProjectRoute.pathForDetails(item.id)),
             cellBuilder: (index, project) => switch (index) {
               0 => Text(project.name),
               1 => Text('€${project.hourPrice.toStringAsFixed(2)}/h'),

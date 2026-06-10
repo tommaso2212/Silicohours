@@ -13,9 +13,10 @@ final _extendSidebar = StateProvider<bool>((ref) {
 });
 
 class AppScreen extends ConsumerWidget {
-  const AppScreen({this.scrollController, this.slivers = const [], super.key});
+  const AppScreen({this.scrollController, this.actions = const [], this.slivers = const [], super.key});
 
   final ScrollController? scrollController;
+  final List<Widget> actions;
   final List<Widget> slivers;
 
   void toggleSidebar(WidgetRef ref) {
@@ -37,8 +38,12 @@ class AppScreen extends ConsumerWidget {
               controller: scrollController,
               slivers: [
                 SliverPadding(
-                  padding: EdgeInsetsGeometry.symmetric(horizontal: AppSpacing.xl - 8, vertical: AppSpacing.sm),
-                  sliver: SliverToBoxAdapter(child: _Appbar(isBack: hasBack)),
+                  padding: EdgeInsetsGeometry.symmetric(
+                    vertical: AppSpacing.sm,
+                  ).add(EdgeInsetsGeometry.only(left: AppSpacing.xl - 10, right: AppSpacing.xl)),
+                  sliver: SliverToBoxAdapter(
+                    child: _Appbar(isBack: hasBack, actions: actions),
+                  ),
                 ),
                 SliverPadding(
                   padding: EdgeInsets.all(AppSpacing.xl).copyWith(top: 0),
@@ -107,9 +112,10 @@ class _AnimatedSidebarState extends State<_AnimatedSidebar> with SingleTickerPro
 }
 
 class _Appbar extends ConsumerWidget {
-  const _Appbar({this.isBack = true});
+  const _Appbar({this.isBack = true, required this.actions});
 
   final bool isBack;
+  final List<Widget> actions;
 
   void toggleSidebar(WidgetRef ref) {
     final currentValue = ref.read(_extendSidebar);
@@ -131,7 +137,7 @@ class _Appbar extends ConsumerWidget {
                   icon: isSidebarExtended ? AppIcons.leftPanelClose : AppIcons.leftPanelOpen,
                 ),
               ),
-        const SizedBox.shrink(),
+        Row(mainAxisSize: MainAxisSize.min, children: actions),
       ],
     );
   }

@@ -1,5 +1,6 @@
 export 'services/error_service/error_service.dart';
 export 'services/repositories/project_repository.dart';
+export 'services/repositories/task_repository.dart';
 export 'services/repositories/user_repository.dart';
 export 'usecases/usecase.dart';
 export 'usecases/user/get_all_users_usecase.dart';
@@ -11,3 +12,6 @@ export 'usecases/project/get_project_usecase.dart';
 export 'usecases/project/create_project_usecase.dart';
 export 'usecases/project/update_project_usecase.dart';
 export 'usecases/project/delete_project_usecase.dart';
+export 'usecases/task/create_task_usecase.dart';
+export 'usecases/task/delete_task_usecase.dart';
+export 'usecases/task/get_project_tasks_usecase.dart';

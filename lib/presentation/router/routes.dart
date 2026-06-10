@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/project/project_screen.dart';
+import '../screens/project_detail/project_detail_screen.dart';
 import '../screens/user/user_screen.dart';
 
 class HomeRoute extends GoRoute {
@@ -16,9 +17,23 @@ class UserRoute extends GoRoute {
 }
 
 class ProjectRoute extends GoRoute {
-  ProjectRoute() : super(path: pagePath, name: 'Projects', builder: (context, state) => const ProjectScreen());
+  ProjectRoute()
+    : super(
+        path: pagePath,
+        name: 'Projects',
+        builder: (context, state) => const ProjectScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            redirect: (context, state) => state.pathParameters['id'] == null ? pagePath : null,
+            builder: (context, state) => ProjectDetailScreen(projectId: state.pathParameters['id']!),
+          ),
+        ],
+      );
 
   static const String pagePath = '/projects';
+
+  static String pathForDetails(String id) => '${ProjectRoute.pagePath}/$id';
 }
 
 List<GoRoute> sidebarRoutes = [HomeRoute(), UserRoute(), ProjectRoute()];
