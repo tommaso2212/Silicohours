@@ -152,3 +152,51 @@ final class DeleteTimeLogUsecaseProvider
 
 String _$deleteTimeLogUsecaseHash() =>
     r'5e80b67b5be6b639930bf36ec675892266de33a8';
+
+@ProviderFor(editTimeLogUsecase)
+final editTimeLogUsecaseProvider = EditTimeLogUsecaseProvider._();
+
+final class EditTimeLogUsecaseProvider
+    extends
+        $FunctionalProvider<
+          EditTimeLogUsecase,
+          EditTimeLogUsecase,
+          EditTimeLogUsecase
+        >
+    with $Provider<EditTimeLogUsecase> {
+  EditTimeLogUsecaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'editTimeLogUsecaseProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$editTimeLogUsecaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<EditTimeLogUsecase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  EditTimeLogUsecase create(Ref ref) {
+    return editTimeLogUsecase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EditTimeLogUsecase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<EditTimeLogUsecase>(value),
+    );
+  }
+}
+
+String _$editTimeLogUsecaseHash() =>
+    r'1483501e5122b1b8ca7be90ef6b58f4b01e1169a';

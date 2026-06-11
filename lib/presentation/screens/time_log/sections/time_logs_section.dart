@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:silicohours/application/application.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/components/components.dart';
+import 'package:silicohours/presentation/screens/time_log/components/edit_time_log_dialog.dart';
+import 'package:silicohours/presentation/screens/time_log/components/time_log_card.dart';
 import 'package:silicohours/presentation/screens/time_log/controller/time_log_controller.dart';
 import 'package:silicohours/presentation/theme/app_breakpoints.dart';
-import 'package:silicohours/presentation/theme/app_colors.dart';
 
 class TimeLogsSection extends ConsumerWidget {
   const TimeLogsSection({required this.scrollController, super.key});
@@ -21,9 +23,9 @@ class TimeLogsSection extends ConsumerWidget {
       onMobile: () => PaginationList<TimeLog>.sliver(
         scrollController: scrollController,
         fetchItems: fetchItems,
-        itemBuilder: (item) => _TimeLogCard(
+        itemBuilder: (item) => TimeLogCard(
           timeLog: item,
-          onDelete: () => ref.read(deleteTimeLogUsecaseProvider).execute((id: item.id)),
+          actionMenu: _TimeLogActionMenu(timeLog: item),
         ),
       ),
       orElse: () => SliverToBoxAdapter(
@@ -41,10 +43,7 @@ class TimeLogsSection extends ConsumerWidget {
               4 => Text(timeLog.description ?? '—'),
               5 => Align(
                 alignment: Alignment.centerRight,
-                child: IconButton(
-                  icon: const Icon(Icons.delete_outline_outlined),
-                  onPressed: () => ref.read(deleteTimeLogUsecaseProvider).execute((id: timeLog.id)),
-                ),
+                child: _TimeLogActionMenu(timeLog: timeLog),
               ),
               _ => const SizedBox.shrink(),
             },
@@ -55,44 +54,32 @@ class TimeLogsSection extends ConsumerWidget {
   }
 }
 
-class _TimeLogCard extends StatelessWidget {
-  const _TimeLogCard({required this.timeLog, required this.onDelete});
+class _TimeLogActionMenu extends ConsumerWidget {
+  const _TimeLogActionMenu({required this.timeLog});
 
   final TimeLog timeLog;
-  final VoidCallback onDelete;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${timeLog.hoursLogged}h — ${timeLog.projectId} / ${timeLog.taskId}',
-                    style: const TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.w500),
-                  ),
-                  if (timeLog.description != null) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      timeLog.description!,
-                      style: TextStyle(color: AppColors.onSurfaceMuted, fontSize: 13),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete_outline_outlined),
-              onPressed: onDelete,
-            ),
-          ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ActionMenu(
+      actions: [
+        MenuAction(
+          label: 'Edit',
+          icon: const Icon(Icons.edit_outlined),
+          action: () async {
+            final input = await showDialog<EditTimeLogInput>(
+              context: context,
+              builder: (_) => EditTimeLogDialog(timeLog: timeLog),
+            );
+            if (input != null) await ref.read(editTimeLogUsecaseProvider).execute(input);
+          },
         ),
-      ),
+        MenuAction(
+          label: 'Delete',
+          icon: const Icon(Icons.delete_outline),
+          action: () => ref.read(deleteTimeLogUsecaseProvider).execute((id: timeLog.id)),
+        ),
+      ],
     );
   }
 }

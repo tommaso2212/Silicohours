@@ -32,3 +32,12 @@ DeleteTimeLogUsecase deleteTimeLogUsecase(Ref ref) {
     errorHandlers: [ref.dialogExceptionHandler()],
   );
 }
+
+@Riverpod(keepAlive: true)
+EditTimeLogUsecase editTimeLogUsecase(Ref ref) {
+  return EditTimeLogUsecase(
+    timeLogRepository: ref.watch(timeLogRepositoryProvider),
+    successHandlers: [ref.dialogSuccessHandler(), (_, _) async => ref.invalidate(fetchTimeLogsProvider)],
+    errorHandlers: [ref.dialogExceptionHandler()],
+  );
+}

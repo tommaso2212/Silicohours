@@ -19,3 +19,4 @@ export 'usecases/task/get_project_tasks_usecase.dart';
 export 'usecases/time_log/get_all_time_logs_usecase.dart';
 export 'usecases/time_log/create_time_log_usecase.dart';
 export 'usecases/time_log/delete_time_log_usecase.dart';
+export 'usecases/time_log/edit_time_log_usecase.dart';

@@ -62,6 +62,23 @@ class MockTimeLogRepository implements TimeLogRepository {
   }
 
   @override
+  Future<TimeLog> editTimeLog({
+    required String id,
+    double? hoursLogged,
+    String? description,
+  }) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    final index = _logs.indexWhere((l) => l.id == id);
+    if (index == -1) throw Exception('TimeLog not found: $id');
+    final updated = _logs[index].copyWith(
+      hoursLogged: hoursLogged ?? _logs[index].hoursLogged,
+      description: description ?? _logs[index].description,
+    );
+    _logs[index] = updated;
+    return updated;
+  }
+
+  @override
   Future<void> deleteTimeLog(String id) async {
     await Future.delayed(const Duration(milliseconds: 500));
     _logs.removeWhere((l) => l.id == id);

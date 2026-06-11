@@ -15,5 +15,10 @@ abstract class TimeLogRepository {
     required double hoursLogged,
     String? description,
   });
+  Future<TimeLog> editTimeLog({
+    required String id,
+    double? hoursLogged,
+    String? description,
+  });
   Future<void> deleteTimeLog(String id);
 }
