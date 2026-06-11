@@ -47,6 +47,7 @@ CreateTaskUsecase createTaskUsecase(Ref ref) {
 DeleteTaskUsecase deleteTaskUsecase(Ref ref) {
   return DeleteTaskUsecase(
     taskRepository: ref.watch(taskRepositoryProvider),
+    validatorHandlers: [ref.dialogConfirmHandler()],
     successHandlers: [ref.dialogSuccessHandler(), (_, _) async => ref.invalidate(fetchProjectTasksProvider)],
     errorHandlers: [ref.dialogExceptionHandler()],
   );

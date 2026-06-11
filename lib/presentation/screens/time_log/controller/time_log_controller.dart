@@ -28,6 +28,7 @@ CreateTimeLogUsecase createTimeLogUsecase(Ref ref) {
 DeleteTimeLogUsecase deleteTimeLogUsecase(Ref ref) {
   return DeleteTimeLogUsecase(
     timeLogRepository: ref.watch(timeLogRepositoryProvider),
+    validatorHandlers: [ref.dialogConfirmHandler()],
     successHandlers: [(_, _) async => ref.invalidate(fetchTimeLogsProvider)],
     errorHandlers: [ref.dialogExceptionHandler()],
   );

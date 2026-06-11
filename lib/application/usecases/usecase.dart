@@ -1,4 +1,5 @@
 import 'package:silicohours/application/usecases/result.dart';
+import 'package:silicohours/domain/exceptions/app_exception.dart';
 
 export 'package:silicohours/application/usecases/result.dart';
 
@@ -18,7 +19,8 @@ abstract class Usecase<R, I> {
   Future<Result<R>> execute(I input) async {
     try {
       for (final v in validatorHandlers) {
-        await v(input);
+        final validate = await v(input);
+        if (!validate) return Result.error(AppException.operationAborted());
       }
       final result = await call(input);
       for (final s in successHandlers) {

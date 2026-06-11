@@ -29,6 +29,7 @@ Future<List<Project>> Function(int, int) fetchProjects(Ref ref) {
 DeleteProjectUsecase deleteProjectUsecase(Ref ref) {
   return DeleteProjectUsecase(
     projectRepository: ref.watch(projectRepositoryProvider),
+    validatorHandlers: [ref.dialogConfirmHandler()],
     successHandlers: [ref.dialogSuccessHandler(), (_, _) async => ref.invalidate(fetchProjectsProvider)],
     errorHandlers: [ref.dialogExceptionHandler()],
   );
