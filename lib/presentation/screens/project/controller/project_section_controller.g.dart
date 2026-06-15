@@ -156,7 +156,7 @@ final class DeleteProjectUsecaseProvider
 }
 
 String _$deleteProjectUsecaseHash() =>
-    r'91f18c20db024d02f2a12a33d446052d6d4cd6dc';
+    r'd4106200e97ca9aa9f4331d1b4d499b4ecd27704';
 
 @ProviderFor(updateProjectUsecase)
 final updateProjectUsecaseProvider = UpdateProjectUsecaseProvider._();

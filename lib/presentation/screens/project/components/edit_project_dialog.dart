@@ -15,8 +15,9 @@ class EditProjectDialog extends HookWidget {
   Widget build(BuildContext context) {
     final nameController = useTextEditingController(text: project.name);
     final hourPriceController = useTextEditingController(text: project.hourPrice.toStringAsFixed(2));
+    final selectedColor = useState<String?>(project.colorHex);
 
-    final isValid = useListenableSelector(Listenable.merge([nameController, hourPriceController]), () {
+    final isValid = useListenableSelector(Listenable.merge([nameController, hourPriceController, selectedColor]), () {
       final price = double.tryParse(hourPriceController.text.trim());
       return nameController.text.trim().isNotEmpty && price != null && price >= 0;
     });
@@ -26,6 +27,7 @@ class EditProjectDialog extends HookWidget {
         project: project.copyWith(
           name: nameController.text.trim(),
           hourPrice: double.parse(hourPriceController.text.trim()),
+          colorHex: selectedColor.value,
         ),
       ));
     }
@@ -40,7 +42,7 @@ class EditProjectDialog extends HookWidget {
         ElevatedButton(onPressed: isValid ? submit : null, child: const Text('Save')),
       ],
       child: Column(
-        spacing: AppSpacing.xs,
+        spacing: AppSpacing.md,
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
@@ -49,17 +51,13 @@ class EditProjectDialog extends HookWidget {
             decoration: const InputDecoration(labelText: 'Name'),
             textInputAction: TextInputAction.next,
           ),
-          const SizedBox(height: 16),
           TextField(
             controller: hourPriceController,
             decoration: const InputDecoration(labelText: 'Hourly Rate (€)', suffixText: '/h'),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
-            textInputAction: TextInputAction.done,
-            onSubmitted: (_) {
-              if (isValid) submit();
-            },
           ),
+          ColorPicker(initialHexColor: selectedColor.value, onChanged: (hex) => selectedColor.value = hex),
         ],
       ),
     );

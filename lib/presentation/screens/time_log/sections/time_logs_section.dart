@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:silicohours/domain/domain.dart';
+import 'package:silicohours/presentation/adapters/project/project_name.dart';
 import 'package:silicohours/presentation/components/components.dart';
 import 'package:silicohours/presentation/screens/time_log/components/edit_time_log_dialog.dart';
 import 'package:silicohours/presentation/screens/time_log/components/time_log_card.dart';
@@ -36,7 +37,7 @@ class TimeLogsSection extends ConsumerWidget {
             columnsNumber: _columns.length,
             headerBuilder: (index) => Text(_columns[index]),
             cellBuilder: (index, timeLog) => switch (index) {
-              0 => Text(timeLog.projectId),
+              0 => ProjectName(projectId: timeLog.projectId),
               1 => Text(timeLog.taskId),
               2 => Text(timeLog.userId),
               3 => Text('${timeLog.hoursLogged}h'),

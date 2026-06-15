@@ -9,6 +9,8 @@ import 'package:silicohours/presentation/screens/project/components/project_card
 import 'package:silicohours/presentation/screens/project/controller/project_section_controller.dart';
 import 'package:silicohours/presentation/services/dialog_service/dialog_service.dart';
 import 'package:silicohours/presentation/theme/app_breakpoints.dart';
+import 'package:silicohours/presentation/theme/app_spacing.dart';
+import 'package:silicohours/presentation/utils/color_helper.dart';
 
 class ProjectsSection extends ConsumerWidget {
   const ProjectsSection({required this.scrollController, super.key});
@@ -40,7 +42,17 @@ class ProjectsSection extends ConsumerWidget {
             headerBuilder: (index) => Text(_columns[index]),
             onRowTap: (item) => context.go(ProjectRoute.pathForDetails(item.id)),
             cellBuilder: (index, project) => switch (index) {
-              0 => Text(project.name),
+              0 => Row(
+                spacing: AppSpacing.sm,
+                children: [
+                  if (project.colorHex != null)
+                    CircleAvatar(
+                      radius: 12,
+                      backgroundColor: ColorHelper.fromHex(project.colorHex) ?? Colors.transparent,
+                    ),
+                  Text(project.name),
+                ],
+              ),
               1 => Text('€${project.hourPrice.toStringAsFixed(2)}/h'),
               2 => Align(
                 alignment: Alignment.centerRight,

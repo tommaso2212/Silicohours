@@ -355,4 +355,4 @@ final class DeleteTaskUsecaseProvider
   }
 }
 
-String _$deleteTaskUsecaseHash() => r'9f022f21b5d9caf065aa024689985213141970ff';
+String _$deleteTaskUsecaseHash() => r'ea8d2b109a0909828d2b63773d972c2154de3476';

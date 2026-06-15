@@ -52,9 +52,9 @@ class MockProjectRepository implements ProjectRepository {
   }
 
   @override
-  Future<Project> createProject({required String name, required double hourPrice}) async {
+  Future<Project> createProject({required String name, required double hourPrice, String? colorHex}) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    final project = Project(id: 'p${_nextId++}', name: name, hourPrice: hourPrice);
+    final project = Project(id: 'p${_nextId++}', name: name, hourPrice: hourPrice, colorHex: colorHex);
     _projects.add(project);
     return project;
   }

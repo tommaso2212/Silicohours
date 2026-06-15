@@ -1,3 +1,4 @@
+export 'color_picker/color_picker.dart';
 export 'dialog/app_dialog.dart';
 export 'dialog/success_dialog.dart';
 export 'dialog/confirm_dialog.dart';

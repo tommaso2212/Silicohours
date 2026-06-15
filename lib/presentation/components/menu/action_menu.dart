@@ -21,6 +21,7 @@ class ActionMenu extends HookWidget {
   Widget build(BuildContext context) {
     final controller = useMenuController();
     return MenuAnchor(
+      controller: controller,
       menuChildren: actions
           .map(
             (e) => ListTile(

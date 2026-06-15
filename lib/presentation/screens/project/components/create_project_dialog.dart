@@ -12,6 +12,7 @@ class CreateProjectDialog extends HookWidget {
   Widget build(BuildContext context) {
     final nameController = useTextEditingController();
     final hourPriceController = useTextEditingController();
+    final selectedColor = useState<String?>(null);
 
     final isValid = useListenableSelector(Listenable.merge([nameController, hourPriceController]), () {
       final price = double.tryParse(hourPriceController.text.trim());
@@ -22,6 +23,7 @@ class CreateProjectDialog extends HookWidget {
       Navigator.of(context).pop<CreateProjectInput>((
         name: nameController.text.trim(),
         hourPrice: double.parse(hourPriceController.text.trim()),
+        colorHex: selectedColor.value,
       ));
     }
 
@@ -35,7 +37,7 @@ class CreateProjectDialog extends HookWidget {
         ElevatedButton(onPressed: isValid ? submit : null, child: const Text('Create')),
       ],
       child: Column(
-        spacing: AppSpacing.xs,
+        spacing: AppSpacing.md,
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
@@ -44,17 +46,13 @@ class CreateProjectDialog extends HookWidget {
             decoration: const InputDecoration(labelText: 'Name'),
             textInputAction: TextInputAction.next,
           ),
-          const SizedBox(height: 16),
           TextField(
             controller: hourPriceController,
             decoration: const InputDecoration(labelText: 'Hourly Rate (€)', suffixText: '/h'),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
-            textInputAction: TextInputAction.done,
-            onSubmitted: (_) {
-              if (isValid) submit();
-            },
           ),
+          ColorPicker(initialHexColor: selectedColor.value, onChanged: (hex) => selectedColor.value = hex),
         ],
       ),
     );
