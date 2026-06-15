@@ -1,14 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-
 mixin DebounceMixin {
   Timer? _debounceTimer;
 
-  void debounce(
-    VoidCallback action, {
-    Duration delay = const Duration(milliseconds: 300),
-  }) {
+  void debounce(void Function() action, {Duration delay = const Duration(milliseconds: 300)}) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(delay, action);
   }

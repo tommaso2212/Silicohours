@@ -4,6 +4,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 extension type MenuAction._(({String label, Future<void> Function() action, Widget? icon}) _) {
   MenuAction({required String label, required Future<void> Function() action, Widget? icon})
     : this._((label: label, action: action, icon: icon));
+
+  MenuAction.edit({required Future<void> Function() action})
+    : this._((label: 'Edit', action: action, icon: const Icon(Icons.edit_outlined)));
+
+  MenuAction.delete({required Future<void> Function() action})
+    : this._((label: 'Delete', action: action, icon: const Icon(Icons.delete_outline)));
 }
 
 class ActionMenu extends HookWidget {

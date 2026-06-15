@@ -7,6 +7,7 @@ import 'package:silicohours/presentation/router/routes.dart';
 import 'package:silicohours/presentation/screens/project/components/edit_project_dialog.dart';
 import 'package:silicohours/presentation/screens/project/components/project_card.dart';
 import 'package:silicohours/presentation/screens/project/controller/project_section_controller.dart';
+import 'package:silicohours/presentation/services/dialog_service/dialog_service.dart';
 import 'package:silicohours/presentation/theme/app_breakpoints.dart';
 
 class ProjectsSection extends ConsumerWidget {
@@ -63,19 +64,12 @@ class _ProjectActionMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ActionMenu(
       actions: [
-        MenuAction(
-          label: 'Edit',
-          icon: const Icon(Icons.edit),
-          action: () => showDialog<void>(
-            context: context,
-            builder: (_) => EditProjectDialog(project: project),
-          ),
+        MenuAction.edit(
+          action: ref
+              .read(updateProjectUsecaseProvider)
+              .usecaseDialog(ref, dialog: EditProjectDialog(project: project)),
         ),
-        MenuAction(
-          label: 'Delete',
-          action: () => ref.read(deleteProjectUsecaseProvider).execute((id: project.id)),
-          icon: const Icon(Icons.delete),
-        ),
+        MenuAction.delete(action: () => ref.read(deleteProjectUsecaseProvider).execute((id: project.id))),
       ],
     );
   }
