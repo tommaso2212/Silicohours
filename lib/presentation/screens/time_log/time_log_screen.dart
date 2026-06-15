@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:silicohours/application/application.dart';
 import 'package:silicohours/presentation/components/components.dart';
 import 'package:silicohours/presentation/screens/time_log/components/create_time_log_dialog.dart';
 import 'package:silicohours/presentation/screens/time_log/controller/time_log_controller.dart';
 import 'package:silicohours/presentation/screens/time_log/sections/time_logs_section.dart';
+import 'package:silicohours/presentation/services/dialog_service/dialog_service.dart';
 import 'package:silicohours/presentation/theme/app_spacing.dart';
 
 class TimeLogScreen extends HookConsumerWidget {
@@ -18,15 +18,7 @@ class TimeLogScreen extends HookConsumerWidget {
       scrollController: scrollController,
       actions: [
         ElevatedButton.icon(
-          onPressed: () async {
-            final input = await showDialog<CreateTimeLogInput>(
-              context: context,
-              builder: (_) => const CreateTimeLogDialog(),
-            );
-            if (input != null) {
-              ref.read(createTimeLogUsecaseProvider).execute(input);
-            }
-          },
+          onPressed: ref.read(createTimeLogUsecaseProvider).usecaseDialog(ref, dialog: const CreateTimeLogDialog()),
           icon: const Icon(Icons.add),
           label: const Text('New time log'),
         ),

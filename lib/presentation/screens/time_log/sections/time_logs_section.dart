@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:silicohours/application/application.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/components/components.dart';
 import 'package:silicohours/presentation/screens/time_log/components/edit_time_log_dialog.dart';
 import 'package:silicohours/presentation/screens/time_log/components/time_log_card.dart';
 import 'package:silicohours/presentation/screens/time_log/controller/time_log_controller.dart';
+import 'package:silicohours/presentation/services/dialog_service/dialog_service.dart';
 import 'package:silicohours/presentation/theme/app_breakpoints.dart';
 
 class TimeLogsSection extends ConsumerWidget {
@@ -63,22 +63,10 @@ class _TimeLogActionMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ActionMenu(
       actions: [
-        MenuAction(
-          label: 'Edit',
-          icon: const Icon(Icons.edit_outlined),
-          action: () async {
-            final input = await showDialog<EditTimeLogInput>(
-              context: context,
-              builder: (_) => EditTimeLogDialog(timeLog: timeLog),
-            );
-            if (input != null) await ref.read(editTimeLogUsecaseProvider).execute(input);
-          },
+        MenuAction.edit(
+          action: ref.read(editTimeLogUsecaseProvider).usecaseDialog(ref, dialog: EditTimeLogDialog(timeLog: timeLog)),
         ),
-        MenuAction(
-          label: 'Delete',
-          icon: const Icon(Icons.delete_outline),
-          action: () => ref.read(deleteTimeLogUsecaseProvider).execute((id: timeLog.id)),
-        ),
+        MenuAction.delete(action: () => ref.read(deleteTimeLogUsecaseProvider).execute((id: timeLog.id))),
       ],
     );
   }

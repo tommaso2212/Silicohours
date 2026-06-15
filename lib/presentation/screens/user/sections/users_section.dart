@@ -74,11 +74,7 @@ class _UserActionMenu extends ConsumerWidget {
           )),
           icon: Icon(user.role.icon),
         ),
-        MenuAction(
-          label: 'Delete',
-          action: () => ref.read(deleteUserUsecaseProvider).execute((id: user.id)),
-          icon: const Icon(Icons.delete),
-        ),
+        MenuAction.delete(action: () => ref.read(deleteUserUsecaseProvider).execute((id: user.id))),
       ],
     );
   }
