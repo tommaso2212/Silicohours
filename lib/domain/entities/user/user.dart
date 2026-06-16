@@ -16,7 +16,7 @@ abstract class User with _$User {
 }
 
 extension UserExtension on User {
-  String? get fullName => [firstName, lastName].where((element) => element != null).join(' ');
+  String get fullName => [firstName, lastName].where((element) => element != null).join(' ');
 
   String get initials {
     final first = firstName?.isNotEmpty == true ? firstName![0] : '';

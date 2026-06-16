@@ -34,6 +34,12 @@ class MockTaskRepository implements TaskRepository {
   }
 
   @override
+  Future<Task> getTask(String projectId, String taskId) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return _tasks.firstWhere((t) => t.projectId == projectId && t.id == taskId);
+  }
+
+  @override
   Future<Task> createTask({required String projectId, required String name}) async {
     await Future.delayed(const Duration(milliseconds: 500));
     final task = Task(id: 't${_nextId++}', projectId: projectId, name: name);

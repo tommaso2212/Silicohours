@@ -16,6 +16,7 @@ export 'usecases/project/delete_project_usecase.dart';
 export 'usecases/task/create_task_usecase.dart';
 export 'usecases/task/delete_task_usecase.dart';
 export 'usecases/task/get_project_tasks_usecase.dart';
+export 'usecases/task/get_task_usecase.dart';
 export 'usecases/time_log/get_all_time_logs_usecase.dart';
 export 'usecases/time_log/create_time_log_usecase.dart';
 export 'usecases/time_log/delete_time_log_usecase.dart';
