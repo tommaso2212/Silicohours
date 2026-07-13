@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silicohours/application/application.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/infrastructure/infrastructure.dart';
+import 'package:silicohours/presentation/adapters/user/role_chip.dart';
 import 'package:silicohours/presentation/components/icons/initials_avatar.dart';
 import 'package:silicohours/presentation/theme/app_spacing.dart';
 
@@ -43,6 +44,8 @@ class UserName extends ConsumerWidget {
           children: [
             InitialsAvatar(initials: user.initials, radius: iconRadius),
             Text(user.fullName),
+
+            RoleChip(role: user.role),
           ],
         ),
       ),

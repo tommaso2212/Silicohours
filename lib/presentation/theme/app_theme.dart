@@ -17,7 +17,7 @@ class AppTheme {
     ),
     dividerColor: AppColors.surfaceVariant,
     scaffoldBackgroundColor: AppColors.background,
-    drawerTheme: DrawerThemeData(backgroundColor: AppColors.surface, width: 304),
+    drawerTheme: DrawerThemeData(backgroundColor: AppColors.surface, width: 272),
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.background,
       foregroundColor: AppColors.onSurface,
@@ -48,6 +48,10 @@ class AppTheme {
         if (states.contains(WidgetState.error)) return TextStyle(color: AppColors.error);
         return TextStyle();
       }),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(color: AppColors.surfaceVariant),
+      ),
       border: OutlineInputBorder(
         borderRadius: borderRadius,
         borderSide: BorderSide(color: AppColors.surfaceVariant),
@@ -79,6 +83,11 @@ class AppTheme {
           return Colors.transparent;
         }
       }),
+    ),
+    menuTheme: MenuThemeData(
+      style: MenuStyle(
+        shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(12))),
+      ),
     ),
   );
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:silicohours/application/application.dart';
+import 'package:silicohours/presentation/adapters/user/user_dropdown.dart';
 import 'package:silicohours/presentation/components/components.dart';
 import 'package:silicohours/presentation/theme/app_spacing.dart';
 
@@ -62,11 +63,12 @@ class CreateTimeLogDialog extends HookWidget {
             decoration: const InputDecoration(labelText: 'Task ID'),
             textInputAction: TextInputAction.next,
           ),
-          TextField(
-            controller: userIdController,
-            decoration: const InputDecoration(labelText: 'User ID'),
-            textInputAction: TextInputAction.next,
-          ),
+          UserDropdown(onChanged: (value) {}),
+          // TextField(
+          //   controller: userIdController,
+          //   decoration: const InputDecoration(labelText: 'User ID'),
+          //   textInputAction: TextInputAction.next,
+          // ),
           TextField(
             controller: hoursController,
             decoration: const InputDecoration(labelText: 'Hours logged', suffixText: 'h'),

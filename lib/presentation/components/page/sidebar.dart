@@ -76,7 +76,7 @@ class _SidebarRoutes extends StatelessWidget {
               (e) => ElevatedButton.icon(
                 onPressed: () => context.go(e.path),
                 style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-                  padding: WidgetStatePropertyAll(EdgeInsets.all(AppSpacing.lg)),
+                  padding: WidgetStatePropertyAll(EdgeInsets.all(AppSpacing.md)),
                   alignment: AlignmentGeometry.centerLeft,
                   backgroundColor: e.path == currentPath ? null : WidgetStatePropertyAll(Colors.transparent),
                 ),

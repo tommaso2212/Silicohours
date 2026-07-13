@@ -17,7 +17,7 @@ class Logo extends StatelessWidget {
           padding: EdgeInsets.all(4),
           child: Icon(Icons.timer_outlined, color: Colors.white),
         ),
-        Text('Silicohours', style: Theme.of(context).textTheme.titleLarge),
+        Text('Silicohours', style: Theme.of(context).textTheme.titleMedium),
       ],
     );
   }

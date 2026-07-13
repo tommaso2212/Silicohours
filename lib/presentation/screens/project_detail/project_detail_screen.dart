@@ -22,7 +22,9 @@ class ProjectDetailScreen extends HookConsumerWidget {
       scrollController: scrollController,
       actions: [
         ElevatedButton.icon(
-          onPressed: ref.read(createTaskUsecaseProvider).usecaseDialog(ref, dialog: const CreateTaskDialog()),
+          onPressed: ref
+              .read(createTaskUsecaseProvider)
+              .usecaseDialog(ref, dialog: CreateTaskDialog(projectId: projectId)),
           icon: const Icon(Icons.add),
           label: const Text('New task'),
         ),

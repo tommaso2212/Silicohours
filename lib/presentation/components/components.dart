@@ -12,3 +12,4 @@ export 'icons/initials_avatar.dart';
 export 'pagination/pagination_data_table.dart';
 export 'pagination/pagination_list.dart';
 export 'menu/action_menu.dart';
+export 'searchable_dropdown/searchable_dropdown.dart';

@@ -25,7 +25,7 @@ class UserCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user.fullName ?? '—',
+                    user.fullName,
                     style: const TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.w500),
                   ),
                   if (user.mail != null)
