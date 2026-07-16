@@ -3,23 +3,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silicohours/application/application.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/infrastructure/infrastructure.dart';
-import 'package:silicohours/presentation/adapters/user/user_name.dart';
+import 'package:silicohours/presentation/adapters/project/project_name.dart';
 import 'package:silicohours/presentation/components/components.dart';
 
-class UserDropdown extends ConsumerWidget {
-  const UserDropdown({required this.controller, super.key});
+class ProjectDropdown extends ConsumerWidget {
+  const ProjectDropdown({required this.controller, super.key});
 
-  final DropdownController<User> controller;
+  final DropdownController<Project> controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return PaginationDropdown<User>(
-      label: 'User',
+    return PaginationDropdown<Project>(
+      label: 'Project',
       controller: controller,
-      fetchItems: (page, pageSize, q) => GetAllUsersUsecase(
-        userRepository: ref.read(userRepositoryProvider),
+      fetchItems: (page, pageSize, q) => GetAllProjectsUsecase(
+        projectRepository: ref.read(projectRepositoryProvider),
       ).execute((pageIndex: page, pageSize: pageSize, q: q)).map(onResult: (result) => result, onError: (_) => []),
-      itemBuilder: (item) => UserName.user(user: item, showRole: false),
+      itemBuilder: (item) => ProjectName.project(project: item),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:silicohours/presentation/theme/app_colors.dart';
 import 'package:silicohours/presentation/theme/app_spacing.dart';
+import 'package:silicohours/presentation/utils/hooks/menu_controller_hook.dart';
 
 extension type MenuAction._(({String label, Future<void> Function() action, Widget? icon, Color? color}) _) {
   MenuAction({required String label, required Future<void> Function() action, Widget? icon, Color? color})
@@ -52,30 +53,10 @@ class ActionMenu extends HookWidget {
             )
             .toList(),
         builder: (context, controller, child) =>
-            IconButton(onPressed: () => controller.toggle(), icon: const Icon(Icons.more_vert_rounded)),
+            IconButton(onPressed: controller.toggle, icon: const Icon(Icons.more_vert_rounded)),
       ),
     );
   }
-}
-
-MenuController useMenuController() => use(_MenuControllerHook());
-
-class _MenuControllerHook extends Hook<MenuController> {
-  @override
-  HookState<MenuController, Hook<MenuController>> createState() => _MenuControllerHookState();
-}
-
-class _MenuControllerHookState extends HookState<MenuController, _MenuControllerHook> {
-  late final controller = MenuController();
-
-  @override
-  MenuController build(BuildContext context) => controller;
-
-  @override
-  void dispose() {}
-
-  @override
-  String get debugLabel => 'useMenuController';
 }
 
 extension on MenuController {

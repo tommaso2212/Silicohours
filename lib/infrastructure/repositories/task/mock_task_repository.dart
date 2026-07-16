@@ -10,6 +10,7 @@ class MockTaskRepository implements TaskRepository {
     const Task(id: 't5', projectId: 'p2', name: 'Implement push notifications'),
     const Task(id: 't6', projectId: 'p3', name: 'Set up CI pipeline'),
     const Task(id: 't7', projectId: 'p3', name: 'Integrate analytics'),
+    const Task(id: 't8', projectId: 'p3', name: 'Implement push notifications long long description'),
   ];
 
   int _nextId = 8;

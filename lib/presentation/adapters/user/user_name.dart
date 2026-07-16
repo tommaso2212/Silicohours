@@ -14,13 +14,14 @@ final _userByIdProvider = FutureProvider.family<User, String>((ref, userId) {
 });
 
 class UserName extends ConsumerWidget {
-  const UserName({required String this.userId, this.iconRadius = 12, super.key}) : user = null;
-  const UserName.user({required User this.user, this.iconRadius = 12, super.key}) : userId = null;
+  const UserName({required String this.userId, this.iconRadius = 12, this.showRole = true, super.key}) : user = null;
+  const UserName.user({required User this.user, this.iconRadius = 12, this.showRole = true, super.key}) : userId = null;
 
   final String? userId;
   final User? user;
 
   final double iconRadius;
+  final bool showRole;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,17 +38,13 @@ class UserName extends ConsumerWidget {
         ),
       ),
       error: (_, _) => const Text('-'),
-      data: (user) => Tooltip(
-        message: user.mail,
-        child: Row(
-          spacing: AppSpacing.sm,
-          children: [
-            InitialsAvatar(initials: user.initials, radius: iconRadius),
-            Text(user.fullName),
-
-            RoleChip(role: user.role),
-          ],
-        ),
+      data: (user) => Row(
+        spacing: AppSpacing.sm,
+        children: [
+          InitialsAvatar(initials: user.initials, radius: iconRadius),
+          Text(user.fullName),
+          if (showRole) RoleChip(role: user.role),
+        ],
       ),
     );
   }

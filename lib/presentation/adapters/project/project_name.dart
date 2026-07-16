@@ -6,7 +6,7 @@ import 'package:silicohours/infrastructure/infrastructure.dart';
 import 'package:silicohours/presentation/theme/app_spacing.dart';
 import 'package:silicohours/presentation/utils/color_helper.dart';
 
-final _projectByIdProvider = FutureProvider.family<Project, String>((ref, projectId) {
+final projectByIdProvider = FutureProvider.family<Project, String>((ref, projectId) {
   return GetProjectUsecase(
     projectRepository: ref.read(projectRepositoryProvider),
   ).execute((id: projectId)).map(onResult: (project) => project, onError: (error) => throw error);
@@ -23,7 +23,7 @@ class ProjectName extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final projectAsync = project != null ? AsyncData(project!) : ref.watch(_projectByIdProvider(projectId!));
+    final projectAsync = project != null ? AsyncData(project!) : ref.watch(projectByIdProvider(projectId!));
 
     return projectAsync.when(
       loading: () => CircularProgressIndicator(

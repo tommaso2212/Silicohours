@@ -4,6 +4,7 @@ import 'package:silicohours/presentation/adapters/user/role_chip.dart';
 import 'package:silicohours/presentation/components/components.dart';
 
 import 'package:silicohours/presentation/theme/app_colors.dart';
+import 'package:silicohours/presentation/theme/app_spacing.dart';
 
 class UserCard extends StatelessWidget {
   const UserCard({required this.user, this.actionMenu, super.key});
@@ -17,9 +18,9 @@ class UserCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
+          spacing: AppSpacing.md,
           children: [
             InitialsAvatar(initials: user.initials),
-            const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

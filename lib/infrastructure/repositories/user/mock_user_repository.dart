@@ -18,11 +18,21 @@ class MockUserRepository implements UserRepository {
     const User(id: '13', firstName: 'Maria', lastName: 'Vasquez', mail: 'maria.vasquez@example.com'),
     const User(id: '14', firstName: 'Nour', lastName: 'El-Amine', mail: 'nour.elamine@example.com'),
     const User(id: '15', firstName: 'Oscar', lastName: 'Petrov', mail: 'oscar.petrov@example.com'),
+    const User(id: '16', firstName: 'Priya', lastName: 'Sharma', mail: 'priya.sharma@example.com'),
+    const User(id: '17', firstName: 'Quentin', lastName: 'Dubois', mail: 'quentin.dubois@example.com'),
+    const User(id: '18', firstName: 'Renata', lastName: 'Silva', mail: 'renata.silva@example.com'),
+    const User(id: '19', firstName: 'Stefan', lastName: 'Novak', mail: 'stefan.novak@example.com'),
+    const User(id: '20', firstName: 'Tara', lastName: 'Whitfield', mail: 'tara.whitfield@example.com'),
+    const User(id: '21', firstName: 'Umar', lastName: 'Bello', mail: 'umar.bello@example.com'),
+    const User(id: '22', firstName: 'Valentina', lastName: 'Moretti', mail: 'valentina.moretti@example.com'),
+    const User(id: '23', firstName: 'Wei', lastName: 'Zhang', mail: 'wei.zhang@example.com'),
+    const User(id: '24', firstName: 'Ximena', lastName: 'Torres', mail: 'ximena.torres@example.com'),
+    const User(id: '25', firstName: 'Yusuf', lastName: 'Demir', mail: 'yusuf.demir@example.com'),
   ];
 
   @override
   Future<List<User>> getAllUsers({int? pageIndex, int? pageSize, String? q}) async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
     var result = _users.toList();
 
@@ -30,8 +40,9 @@ class MockUserRepository implements UserRepository {
       final query = q.toLowerCase();
       result = result.where((u) {
         return (u.firstName?.toLowerCase().contains(query) ?? false) ||
-            (u.lastName?.toLowerCase().contains(query) ?? false) ||
-            (u.mail?.toLowerCase().contains(query) ?? false);
+            (u.lastName?.toLowerCase().contains(query) ?? false);
+        //  ||
+        // (u.mail?.toLowerCase().contains(query) ?? false);
       }).toList();
     }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:silicohours/presentation/components/pagination/controller/pagination_controller.dart';
 import 'package:silicohours/presentation/theme/app_colors.dart';
 
@@ -7,14 +8,15 @@ extension _PaginationScrollListener on ScrollController {
   void shouldFetchNextBatch(BuildContext context, void Function() fetchNextBatch) {
     final maxScroll = position.maxScrollExtent;
     final currentScroll = position.pixels;
-    final delta = MediaQuery.of(context).size.width * 0.5;
+    //final delta = MediaQuery.of(context).size.width * 0.5;
+    final delta = ((context.findRenderObject() as RenderBox?)?.size.height ?? 1) * 0.5;
     if (maxScroll - currentScroll <= delta && context.mounted) {
       fetchNextBatch();
     }
   }
 }
 
-class Pagination<T> extends ConsumerWidget {
+class Pagination<T> extends HookConsumerWidget {
   const Pagination({
     required this.fetchItems,
     required this.itemsBuilder,
@@ -51,14 +53,14 @@ class Pagination<T> extends ConsumerWidget {
     final controllerProvider = paginationControllerProvider(fetchItems);
     final paginationState = ref.watch(controllerProvider);
 
-    if (scrollController != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!ref.exists(controllerProvider) && !context.mounted) return;
-        scrollController!.addListener(
-          () => scrollController!.shouldFetchNextBatch(context, ref.read(controllerProvider.notifier).fetchNextBatch),
-        );
-      });
-    }
+    useEffect(() {
+      final controller = scrollController;
+      if (controller == null) return null;
+      void listener() =>
+          controller.shouldFetchNextBatch(context, ref.read(controllerProvider.notifier).fetchNextBatch);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [scrollController, controllerProvider]);
 
     if (_sliver) {
       return SliverMainAxisGroup(

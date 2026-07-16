@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silicohours/application/application.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/infrastructure/infrastructure.dart';
+import 'package:silicohours/presentation/theme/app_colors.dart';
+import 'package:silicohours/presentation/theme/app_spacing.dart';
 
 final _taskByIdProvider = FutureProvider.family<Task, ({String projectId, String taskId})>((ref, input) {
   return GetTaskUsecase(taskRepository: ref.read(taskRepositoryProvider))
@@ -38,7 +40,13 @@ class TaskName extends ConsumerWidget {
         ),
       ),
       error: (_, _) => const Text('-'),
-      data: (task) => Text(task.name),
+      data: (task) => Flexible(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+          decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(12)),
+          child: Text(task.name, style: Theme.of(context).textTheme.labelMedium, overflow: TextOverflow.ellipsis),
+        ),
+      ),
     );
   }
 }

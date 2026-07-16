@@ -24,13 +24,10 @@ class EditTimeLogDialog extends HookWidget {
       return null;
     }, const []);
 
-    final isValid = useListenableSelector(
-      hoursController,
-      () {
-        final hours = double.tryParse(hoursController.text.trim());
-        return hours != null && hours > 0;
-      },
-    );
+    final isValid = useListenableSelector(hoursController, () {
+      final hours = double.tryParse(hoursController.text.trim());
+      return hours != null && hours > 0;
+    });
 
     void submit() {
       Navigator.of(context).pop<EditTimeLogInput>((
@@ -50,8 +47,8 @@ class EditTimeLogDialog extends HookWidget {
         ElevatedButton(onPressed: isValid ? submit : null, child: const Text('Save')),
       ],
       child: Column(
+        spacing: AppSpacing.md,
         mainAxisSize: MainAxisSize.min,
-        spacing: AppSpacing.sm,
         children: [
           TextField(
             controller: hoursController,

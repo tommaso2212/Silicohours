@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/adapters/project/project_name.dart';
 import 'package:silicohours/presentation/adapters/task/task_name.dart';
+import 'package:silicohours/presentation/adapters/timelog/timelog_hours_logged.dart';
 import 'package:silicohours/presentation/adapters/user/user_name.dart';
 import 'package:silicohours/presentation/components/components.dart';
 import 'package:silicohours/presentation/screens/time_log/components/edit_time_log_dialog.dart';
@@ -10,6 +11,7 @@ import 'package:silicohours/presentation/screens/time_log/components/time_log_ca
 import 'package:silicohours/presentation/screens/time_log/controller/time_log_controller.dart';
 import 'package:silicohours/presentation/services/dialog_service/dialog_service.dart';
 import 'package:silicohours/presentation/theme/app_breakpoints.dart';
+import 'package:silicohours/presentation/theme/app_colors.dart';
 
 class TimeLogsSection extends ConsumerWidget {
   const TimeLogsSection({required this.scrollController, super.key});
@@ -41,9 +43,12 @@ class TimeLogsSection extends ConsumerWidget {
             cellBuilder: (index, timeLog) => switch (index) {
               0 => ProjectName(projectId: timeLog.projectId),
               1 => TaskName(projectId: timeLog.projectId, taskId: timeLog.taskId),
-              2 => UserName(userId: timeLog.userId),
-              3 => Text('${timeLog.hoursLogged}h'),
-              4 => Text(timeLog.description ?? '—'),
+              2 => UserName(userId: timeLog.userId, showRole: false),
+              3 => TimelogHoursLogged(timeLog: timeLog),
+              4 => Text(
+                timeLog.description ?? '—',
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.onSurfaceMuted),
+              ),
               5 => Align(
                 alignment: Alignment.centerRight,
                 child: _TimeLogActionMenu(timeLog: timeLog),

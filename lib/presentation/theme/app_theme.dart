@@ -44,27 +44,16 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
+      hintStyle: inputTextStyle,
       labelStyle: WidgetStateTextStyle.resolveWith((states) {
-        if (states.contains(WidgetState.error)) return TextStyle(color: AppColors.error);
-        return TextStyle();
+        if (states.contains(WidgetState.error)) return inputTextStyle.copyWith(color: AppColors.error);
+        return inputTextStyle;
       }),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: borderRadius,
-        borderSide: BorderSide(color: AppColors.surfaceVariant),
-      ),
-      border: OutlineInputBorder(
-        borderRadius: borderRadius,
-        borderSide: BorderSide(color: AppColors.surfaceVariant),
-      ),
-      outlineBorder: BorderSide(color: AppColors.surfaceVariant),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: borderRadius,
-        borderSide: BorderSide(color: AppColors.primary),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: borderRadius,
-        borderSide: BorderSide(color: AppColors.error),
-      ),
+      enabledBorder: inputBorder,
+      border: inputBorder,
+      outlineBorder: inputBorder.borderSide,
+      focusedBorder: inputBorder.copyWith(borderSide: inputBorder.borderSide.copyWith(color: AppColors.primary)),
+      errorBorder: inputBorder.copyWith(borderSide: inputBorder.borderSide.copyWith(color: AppColors.error)),
     ),
     dividerTheme: const DividerThemeData(color: AppColors.surfaceVariant),
     iconTheme: const IconThemeData(color: AppColors.primary),
@@ -92,4 +81,11 @@ class AppTheme {
   );
 
   static const BorderRadius borderRadius = BorderRadius.all(Radius.circular(6));
+
+  static const TextStyle inputTextStyle = TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted);
+
+  static const InputBorder inputBorder = OutlineInputBorder(
+    borderRadius: borderRadius,
+    borderSide: BorderSide(color: AppColors.surfaceVariant),
+  );
 }
