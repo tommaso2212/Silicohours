@@ -8,5 +8,6 @@ abstract class Project with _$Project {
     required String id,
     required String name,
     required double hourPrice,
+    String? colorHex,
   }) = _Project;
 }

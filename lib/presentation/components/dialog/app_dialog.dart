@@ -9,6 +9,10 @@ class AppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(title: title?.isNotEmpty ?? false ? Text(title!) : null, content: child, actions: actions);
+    return AlertDialog(
+      title: title?.isNotEmpty ?? false ? Text(title!) : null,
+      content: SingleChildScrollView(child: child),
+      actions: actions,
+    );
   }
 }

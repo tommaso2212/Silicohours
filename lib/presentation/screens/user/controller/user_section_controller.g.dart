@@ -154,7 +154,7 @@ final class DeleteUserUsecaseProvider
   }
 }
 
-String _$deleteUserUsecaseHash() => r'6559e6faf7d98e8ba30cd7254463be75a90f700f';
+String _$deleteUserUsecaseHash() => r'b993e6de9a60c7199d85458420cc66a14f1a74d9';
 
 @ProviderFor(editUserRoleUsecase)
 final editUserRoleUsecaseProvider = EditUserRoleUsecaseProvider._();
@@ -202,4 +202,4 @@ final class EditUserRoleUsecaseProvider
 }
 
 String _$editUserRoleUsecaseHash() =>
-    r'710bdfb35ae18c00d243623e62920f72d6bc018b';
+    r'5dcd759f79528350940da9b38ba3f072cac89f7f';

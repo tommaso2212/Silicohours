@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/theme/app_colors.dart';
+import 'package:silicohours/presentation/theme/app_spacing.dart';
 
 class RoleChip extends StatelessWidget {
   const RoleChip({required this.role, super.key});
@@ -9,18 +10,12 @@ class RoleChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Chip(
-      side: BorderSide(color: role.backgroundColor),
-      label: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 4,
-        children: [
-          Icon(role.icon, size: 14, color: AppColors.onSurface),
-          Text(
-            role.name.capitalize(),
-            style: TextStyle(fontSize: 12, color: AppColors.onSurface, fontWeight: FontWeight.w500),
-          ),
-        ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: role.backgroundColor),
+      child: Text(
+        role.name.toUpperCase(),
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(color: role.textColor),
       ),
     );
   }
@@ -28,8 +23,13 @@ class RoleChip extends StatelessWidget {
 
 extension RoleUi on Role {
   Color get backgroundColor => switch (this) {
-    Role.admin => AppColors.primary,
-    Role.user => AppColors.onSurface,
+    Role.admin => AppColors.primaryDark,
+    Role.user => AppColors.surfaceVariant,
+  };
+
+  Color get textColor => switch (this) {
+    Role.admin => AppColors.primaryLight,
+    Role.user => AppColors.onSurfaceMuted,
   };
 
   IconData get icon => switch (this) {

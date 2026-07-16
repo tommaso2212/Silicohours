@@ -156,7 +156,7 @@ final class DeleteProjectUsecaseProvider
 }
 
 String _$deleteProjectUsecaseHash() =>
-    r'91f18c20db024d02f2a12a33d446052d6d4cd6dc';
+    r'd4106200e97ca9aa9f4331d1b4d499b4ecd27704';
 
 @ProviderFor(updateProjectUsecase)
 final updateProjectUsecaseProvider = UpdateProjectUsecaseProvider._();
@@ -205,3 +205,51 @@ final class UpdateProjectUsecaseProvider
 
 String _$updateProjectUsecaseHash() =>
     r'dcf8fff0078d81953d94781ac18ddaeab9df4f70';
+
+@ProviderFor(createProjectUsecase)
+final createProjectUsecaseProvider = CreateProjectUsecaseProvider._();
+
+final class CreateProjectUsecaseProvider
+    extends
+        $FunctionalProvider<
+          CreateProjectUsecase,
+          CreateProjectUsecase,
+          CreateProjectUsecase
+        >
+    with $Provider<CreateProjectUsecase> {
+  CreateProjectUsecaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'createProjectUsecaseProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$createProjectUsecaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<CreateProjectUsecase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  CreateProjectUsecase create(Ref ref) {
+    return createProjectUsecase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CreateProjectUsecase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CreateProjectUsecase>(value),
+    );
+  }
+}
+
+String _$createProjectUsecaseHash() =>
+    r'5695f3a17babc9c9085f934a34cdf779617af195';

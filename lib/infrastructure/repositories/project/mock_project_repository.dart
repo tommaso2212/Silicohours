@@ -3,7 +3,7 @@ import 'package:silicohours/domain/domain.dart';
 
 class MockProjectRepository implements ProjectRepository {
   final List<Project> _projects = [
-    const Project(id: 'p1', name: 'Website Redesign', hourPrice: 95.0),
+    const Project(id: 'p1', name: 'Website Redesign', hourPrice: 95.0, colorHex: 'be3a3a'),
     const Project(id: 'p2', name: 'Mobile App – iOS', hourPrice: 120.0),
     const Project(id: 'p3', name: 'Mobile App – Android', hourPrice: 110.0),
     const Project(id: 'p4', name: 'Internal Dashboard', hourPrice: 85.0),
@@ -43,18 +43,14 @@ class MockProjectRepository implements ProjectRepository {
     await Future.delayed(const Duration(milliseconds: 800));
     return _projects.firstWhere(
       (p) => p.id == id,
-      orElse: () => throw AppException.httpError(
-        statusCode: 404,
-        title: 'Not Found',
-        message: 'Project $id not found',
-      ),
+      orElse: () => throw AppException.httpError(statusCode: 404, title: 'Not Found', message: 'Project $id not found'),
     );
   }
 
   @override
-  Future<Project> createProject({required String name, required double hourPrice}) async {
+  Future<Project> createProject({required String name, required double hourPrice, String? colorHex}) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    final project = Project(id: 'p${_nextId++}', name: name, hourPrice: hourPrice);
+    final project = Project(id: 'p${_nextId++}', name: name, hourPrice: hourPrice, colorHex: colorHex);
     _projects.add(project);
     return project;
   }

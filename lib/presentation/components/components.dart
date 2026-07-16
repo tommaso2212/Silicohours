@@ -1,3 +1,4 @@
+export 'input/color_picker/color_picker.dart';
 export 'dialog/app_dialog.dart';
 export 'dialog/success_dialog.dart';
 export 'dialog/confirm_dialog.dart';
@@ -9,5 +10,6 @@ export 'page/app_screen.dart';
 export 'icons/app_icons.dart';
 export 'icons/initials_avatar.dart';
 export 'pagination/pagination_data_table.dart';
+export 'pagination/pagination_dropdown.dart';
 export 'pagination/pagination_list.dart';
 export 'menu/action_menu.dart';

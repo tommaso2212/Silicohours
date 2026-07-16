@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:silicohours/application/application.dart';
 import 'package:silicohours/presentation/components/components.dart';
@@ -59,4 +60,11 @@ extension DialogHandler on Ref {
       (_) => read(
         dialogServiceProvider.notifier,
       ).showConfirmDialog(title: title ?? 'Confirm', message: message ?? 'Are you sure you want to proceed?');
+}
+
+extension UsecaseDialog on Usecase {
+  Future<void> Function() usecaseDialog<T>(WidgetRef ref, {required Widget dialog}) => () async {
+    final input = await ref.read(dialogServiceProvider.notifier).showCustomDialog<T>(builder: (_) => dialog);
+    if (input != null) await execute(input);
+  };
 }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:silicohours/presentation/components/components.dart';
+import 'package:silicohours/presentation/screens/project/components/create_project_dialog.dart';
 import 'package:silicohours/presentation/screens/project/controller/project_section_controller.dart';
 import 'package:silicohours/presentation/screens/project/sections/projects_section.dart';
+import 'package:silicohours/presentation/services/dialog_service/dialog_service.dart';
 import 'package:silicohours/presentation/theme/app_spacing.dart';
 
 class ProjectScreen extends HookConsumerWidget {
@@ -14,6 +16,13 @@ class ProjectScreen extends HookConsumerWidget {
     final scrollController = useScrollController();
     return AppScreen(
       scrollController: scrollController,
+      actions: [
+        ElevatedButton.icon(
+          onPressed: ref.read(createProjectUsecaseProvider).usecaseDialog(ref, dialog: const CreateProjectDialog()),
+          icon: const Icon(Icons.add),
+          label: const Text('New project'),
+        ),
+      ],
       slivers: [
         SliverToBoxAdapter(
           child: PageHeader(
@@ -23,7 +32,7 @@ class ProjectScreen extends HookConsumerWidget {
               Flexible(
                 child: TextField(
                   decoration: const InputDecoration(hintText: 'Search projects', prefixIcon: Icon(Icons.search)),
-                  onChanged: (value) => ref.read(fetchProjectsFilterProvider.notifier).set(value),
+                  onChanged: ref.read(fetchProjectsFilterProvider.notifier).set,
                 ),
               ),
             ],

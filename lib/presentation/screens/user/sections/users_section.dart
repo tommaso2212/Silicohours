@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/adapters/user/role_chip.dart';
+import 'package:silicohours/presentation/adapters/user/user_name.dart';
 import 'package:silicohours/presentation/components/components.dart';
 import 'package:silicohours/presentation/screens/user/components/user_card.dart';
 import 'package:silicohours/presentation/screens/user/controller/user_section_controller.dart';
@@ -12,7 +13,7 @@ class UsersSection extends ConsumerWidget {
 
   final ScrollController scrollController;
 
-  static const _columns = ['Name', 'Email', 'Role', ''];
+  static const _columns = ['Name', 'Email', ''];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,10 +36,9 @@ class UsersSection extends ConsumerWidget {
             columnsNumber: _columns.length,
             headerBuilder: (index) => Text(_columns[index]),
             cellBuilder: (index, user) => switch (index) {
-              0 => Text(user.fullName ?? '—'),
+              0 => UserName.user(user: user),
               1 => Text(user.mail ?? '—'),
-              2 => RoleChip(role: user.role),
-              3 => Align(
+              2 => Align(
                 alignment: Alignment.centerRight,
                 child: _UserActionMenu(user: user),
               ),
@@ -62,8 +62,8 @@ class _UserActionMenu extends ConsumerWidget {
       actions: [
         MenuAction(
           label: switch (user.role) {
-            Role.admin => 'Make User',
-            Role.user => 'Make Admin',
+            Role.admin => 'Demote',
+            Role.user => 'Promote',
           },
           action: () => ref.read(editUserRoleUsecaseProvider).execute((
             id: user.id,
@@ -74,11 +74,7 @@ class _UserActionMenu extends ConsumerWidget {
           )),
           icon: Icon(user.role.icon),
         ),
-        MenuAction(
-          label: 'Delete',
-          action: () => ref.read(deleteUserUsecaseProvider).execute((id: user.id)),
-          icon: const Icon(Icons.delete),
-        ),
+        MenuAction.delete(action: () => ref.read(deleteUserUsecaseProvider).execute((id: user.id))),
       ],
     );
   }

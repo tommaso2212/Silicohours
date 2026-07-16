@@ -17,7 +17,7 @@ class AppTheme {
     ),
     dividerColor: AppColors.surfaceVariant,
     scaffoldBackgroundColor: AppColors.background,
-    drawerTheme: DrawerThemeData(backgroundColor: AppColors.surface, width: 304),
+    drawerTheme: DrawerThemeData(backgroundColor: AppColors.surface, width: 272),
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.background,
       foregroundColor: AppColors.onSurface,
@@ -43,18 +43,17 @@ class AppTheme {
         shape: const RoundedRectangleBorder(borderRadius: borderRadius),
       ),
     ),
-    inputDecorationTheme: const InputDecorationTheme(
-      //filled: true,
-      //fillColor: AppColors.surfaceVariant,
-      border: OutlineInputBorder(
-        borderRadius: borderRadius,
-        borderSide: BorderSide(color: AppColors.surfaceVariant),
-      ),
-      outlineBorder: BorderSide(color: AppColors.surfaceVariant),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: borderRadius,
-        borderSide: BorderSide(color: AppColors.primary),
-      ),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: inputTextStyle,
+      labelStyle: WidgetStateTextStyle.resolveWith((states) {
+        if (states.contains(WidgetState.error)) return inputTextStyle.copyWith(color: AppColors.error);
+        return inputTextStyle;
+      }),
+      enabledBorder: inputBorder,
+      border: inputBorder,
+      outlineBorder: inputBorder.borderSide,
+      focusedBorder: inputBorder.copyWith(borderSide: inputBorder.borderSide.copyWith(color: AppColors.primary)),
+      errorBorder: inputBorder.copyWith(borderSide: inputBorder.borderSide.copyWith(color: AppColors.error)),
     ),
     dividerTheme: const DividerThemeData(color: AppColors.surfaceVariant),
     iconTheme: const IconThemeData(color: AppColors.primary),
@@ -74,7 +73,19 @@ class AppTheme {
         }
       }),
     ),
+    menuTheme: MenuThemeData(
+      style: MenuStyle(
+        shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(12))),
+      ),
+    ),
   );
 
   static const BorderRadius borderRadius = BorderRadius.all(Radius.circular(6));
+
+  static const TextStyle inputTextStyle = TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted);
+
+  static const InputBorder inputBorder = OutlineInputBorder(
+    borderRadius: borderRadius,
+    borderSide: BorderSide(color: AppColors.surfaceVariant),
+  );
 }

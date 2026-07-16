@@ -58,6 +58,7 @@ class _SidebarRoutes extends StatelessWidget {
     HomeRoute.pagePath => Icon(Icons.home_outlined),
     UserRoute.pagePath => Icon(Icons.people_outline_rounded),
     ProjectRoute.pagePath => Icon(Icons.folder_outlined),
+    TimeLogRoute.pagePath => Icon(Icons.access_time_outlined),
     String() => null,
   };
 
@@ -75,7 +76,7 @@ class _SidebarRoutes extends StatelessWidget {
               (e) => ElevatedButton.icon(
                 onPressed: () => context.go(e.path),
                 style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-                  padding: WidgetStatePropertyAll(EdgeInsets.all(AppSpacing.lg)),
+                  padding: WidgetStatePropertyAll(EdgeInsets.all(AppSpacing.md)),
                   alignment: AlignmentGeometry.centerLeft,
                   backgroundColor: e.path == currentPath ? null : WidgetStatePropertyAll(Colors.transparent),
                 ),

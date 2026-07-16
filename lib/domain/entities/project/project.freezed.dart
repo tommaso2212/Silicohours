@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Project {
 
- String get id; String get name; double get hourPrice;
+ String get id; String get name; double get hourPrice; String? get colorHex;
 /// Create a copy of Project
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ProjectCopyWith<Project> get copyWith => _$ProjectCopyWithImpl<Project>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Project&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.hourPrice, hourPrice) || other.hourPrice == hourPrice));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Project&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.hourPrice, hourPrice) || other.hourPrice == hourPrice)&&(identical(other.colorHex, colorHex) || other.colorHex == colorHex));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,hourPrice);
+int get hashCode => Object.hash(runtimeType,id,name,hourPrice,colorHex);
 
 @override
 String toString() {
-  return 'Project(id: $id, name: $name, hourPrice: $hourPrice)';
+  return 'Project(id: $id, name: $name, hourPrice: $hourPrice, colorHex: $colorHex)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ProjectCopyWith<$Res>  {
   factory $ProjectCopyWith(Project value, $Res Function(Project) _then) = _$ProjectCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, double hourPrice
+ String id, String name, double hourPrice, String? colorHex
 });
 
 
@@ -62,12 +62,13 @@ class _$ProjectCopyWithImpl<$Res>
 
 /// Create a copy of Project
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? hourPrice = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? hourPrice = null,Object? colorHex = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,hourPrice: null == hourPrice ? _self.hourPrice : hourPrice // ignore: cast_nullable_to_non_nullable
-as double,
+as double,colorHex: freezed == colorHex ? _self.colorHex : colorHex // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -152,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  double hourPrice)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  double hourPrice,  String? colorHex)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Project() when $default != null:
-return $default(_that.id,_that.name,_that.hourPrice);case _:
+return $default(_that.id,_that.name,_that.hourPrice,_that.colorHex);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return $default(_that.id,_that.name,_that.hourPrice);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  double hourPrice)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  double hourPrice,  String? colorHex)  $default,) {final _that = this;
 switch (_that) {
 case _Project():
-return $default(_that.id,_that.name,_that.hourPrice);case _:
+return $default(_that.id,_that.name,_that.hourPrice,_that.colorHex);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +194,10 @@ return $default(_that.id,_that.name,_that.hourPrice);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  double hourPrice)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  double hourPrice,  String? colorHex)?  $default,) {final _that = this;
 switch (_that) {
 case _Project() when $default != null:
-return $default(_that.id,_that.name,_that.hourPrice);case _:
+return $default(_that.id,_that.name,_that.hourPrice,_that.colorHex);case _:
   return null;
 
 }
@@ -208,12 +209,13 @@ return $default(_that.id,_that.name,_that.hourPrice);case _:
 
 
 class _Project implements Project {
-  const _Project({required this.id, required this.name, required this.hourPrice});
+  const _Project({required this.id, required this.name, required this.hourPrice, this.colorHex});
   
 
 @override final  String id;
 @override final  String name;
 @override final  double hourPrice;
+@override final  String? colorHex;
 
 /// Create a copy of Project
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +227,16 @@ _$ProjectCopyWith<_Project> get copyWith => __$ProjectCopyWithImpl<_Project>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Project&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.hourPrice, hourPrice) || other.hourPrice == hourPrice));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Project&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.hourPrice, hourPrice) || other.hourPrice == hourPrice)&&(identical(other.colorHex, colorHex) || other.colorHex == colorHex));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,hourPrice);
+int get hashCode => Object.hash(runtimeType,id,name,hourPrice,colorHex);
 
 @override
 String toString() {
-  return 'Project(id: $id, name: $name, hourPrice: $hourPrice)';
+  return 'Project(id: $id, name: $name, hourPrice: $hourPrice, colorHex: $colorHex)';
 }
 
 
@@ -245,7 +247,7 @@ abstract mixin class _$ProjectCopyWith<$Res> implements $ProjectCopyWith<$Res> {
   factory _$ProjectCopyWith(_Project value, $Res Function(_Project) _then) = __$ProjectCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, double hourPrice
+ String id, String name, double hourPrice, String? colorHex
 });
 
 
@@ -262,12 +264,13 @@ class __$ProjectCopyWithImpl<$Res>
 
 /// Create a copy of Project
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? hourPrice = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? hourPrice = null,Object? colorHex = freezed,}) {
   return _then(_Project(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,hourPrice: null == hourPrice ? _self.hourPrice : hourPrice // ignore: cast_nullable_to_non_nullable
-as double,
+as double,colorHex: freezed == colorHex ? _self.colorHex : colorHex // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
