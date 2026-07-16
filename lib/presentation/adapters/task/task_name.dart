@@ -40,12 +40,11 @@ class TaskName extends ConsumerWidget {
         ),
       ),
       error: (_, _) => const Text('-'),
-      data: (task) => Flexible(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
-          decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(12)),
-          child: Text(task.name, style: Theme.of(context).textTheme.labelMedium, overflow: TextOverflow.ellipsis),
-        ),
+      data: (task) => Container(
+        constraints: BoxConstraints(maxWidth: 200),
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+        decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(12)),
+        child: Text(task.name, style: Theme.of(context).textTheme.labelMedium, softWrap: true),
       ),
     );
   }

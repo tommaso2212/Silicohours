@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - release-pages
+  workflow_dispatch:
 
 jobs:
   build:

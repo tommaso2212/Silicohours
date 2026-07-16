@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:silicohours/presentation/components/pagination/controller/pagination_controller.dart';
@@ -8,8 +9,16 @@ extension _PaginationScrollListener on ScrollController {
   void shouldFetchNextBatch(BuildContext context, void Function() fetchNextBatch) {
     final maxScroll = position.maxScrollExtent;
     final currentScroll = position.pixels;
-    //final delta = MediaQuery.of(context).size.width * 0.5;
-    final delta = ((context.findRenderObject() as RenderBox?)?.size.height ?? 1) * 0.5;
+
+    final renderObject = context.findRenderObject();
+    final height = switch (renderObject) {
+      RenderBox(:final size) => size.height,
+      RenderSliverMainAxisGroup() => MediaQuery.of(context).size.height,
+      RenderObject() => null,
+      null => null,
+    };
+
+    final delta = (height ?? 1) * 0.5;
     if (maxScroll - currentScroll <= delta && context.mounted) {
       fetchNextBatch();
     }
@@ -56,8 +65,7 @@ class Pagination<T> extends HookConsumerWidget {
     useEffect(() {
       final controller = scrollController;
       if (controller == null) return null;
-      void listener() =>
-          controller.shouldFetchNextBatch(context, ref.read(controllerProvider.notifier).fetchNextBatch);
+      void listener() => controller.shouldFetchNextBatch(context, ref.read(controllerProvider.notifier).fetchNextBatch);
       controller.addListener(listener);
       return () => controller.removeListener(listener);
     }, [scrollController, controllerProvider]);
