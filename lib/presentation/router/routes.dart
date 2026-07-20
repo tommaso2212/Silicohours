@@ -1,12 +1,13 @@
 import 'package:go_router/go_router.dart';
-import '../screens/home/home_screen.dart';
+import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/project/project_screen.dart';
 import '../screens/project_detail/project_detail_screen.dart';
 import '../screens/time_log/time_log_screen.dart';
 import '../screens/user/user_screen.dart';
 
-class HomeRoute extends GoRoute {
-  HomeRoute() : super(path: pagePath, name: 'Homepage', builder: (context, state) => const HomeScreen());
+class DashboardRoute extends GoRoute {
+  DashboardRoute()
+    : super(path: pagePath, name: 'Dashboard', builder: (context, state) => const DashboardScreen());
 
   static const String pagePath = '/';
 }
@@ -43,6 +44,6 @@ class TimeLogRoute extends GoRoute {
   static const String pagePath = '/time-logs';
 }
 
-List<GoRoute> sidebarRoutes = [HomeRoute(), UserRoute(), ProjectRoute(), TimeLogRoute()];
+List<GoRoute> sidebarRoutes = [DashboardRoute(), UserRoute(), ProjectRoute(), TimeLogRoute()];
 
 List<GoRoute> get appRoutes => [...sidebarRoutes];

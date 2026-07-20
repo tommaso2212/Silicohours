@@ -10,6 +10,7 @@ abstract class TimeLog with _$TimeLog {
     required String taskId,
     required String userId,
     required double hoursLogged,
+    required DateTime date,
     String? description,
   }) = _TimeLog;
 }

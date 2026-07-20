@@ -7,6 +7,7 @@ typedef GetAllTimeLogsInput = ({
   String? projectId,
   String? taskId,
   String? userId,
+  DateTime? date,
 });
 
 class GetAllTimeLogsUsecase extends Usecase<List<TimeLog>, GetAllTimeLogsInput> {
@@ -27,6 +28,7 @@ class GetAllTimeLogsUsecase extends Usecase<List<TimeLog>, GetAllTimeLogsInput> 
       projectId: input.projectId,
       taskId: input.taskId,
       userId: input.userId,
+      date: input.date,
     );
   }
 }

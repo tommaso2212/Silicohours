@@ -2,4 +2,4 @@
 !.gitignore
 !.metadata
 !.github/
-build/
+/build

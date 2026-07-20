@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TimeLog {
 
- String get id; String get projectId; String get taskId; String get userId; double get hoursLogged; String? get description;
+ String get id; String get projectId; String get taskId; String get userId; double get hoursLogged; DateTime get date; String? get description;
 /// Create a copy of TimeLog
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $TimeLogCopyWith<TimeLog> get copyWith => _$TimeLogCopyWithImpl<TimeLog>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimeLog&&(identical(other.id, id) || other.id == id)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&(identical(other.taskId, taskId) || other.taskId == taskId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.hoursLogged, hoursLogged) || other.hoursLogged == hoursLogged)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimeLog&&(identical(other.id, id) || other.id == id)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&(identical(other.taskId, taskId) || other.taskId == taskId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.hoursLogged, hoursLogged) || other.hoursLogged == hoursLogged)&&(identical(other.date, date) || other.date == date)&&(identical(other.description, description) || other.description == description));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,projectId,taskId,userId,hoursLogged,description);
+int get hashCode => Object.hash(runtimeType,id,projectId,taskId,userId,hoursLogged,date,description);
 
 @override
 String toString() {
-  return 'TimeLog(id: $id, projectId: $projectId, taskId: $taskId, userId: $userId, hoursLogged: $hoursLogged, description: $description)';
+  return 'TimeLog(id: $id, projectId: $projectId, taskId: $taskId, userId: $userId, hoursLogged: $hoursLogged, date: $date, description: $description)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $TimeLogCopyWith<$Res>  {
   factory $TimeLogCopyWith(TimeLog value, $Res Function(TimeLog) _then) = _$TimeLogCopyWithImpl;
 @useResult
 $Res call({
- String id, String projectId, String taskId, String userId, double hoursLogged, String? description
+ String id, String projectId, String taskId, String userId, double hoursLogged, DateTime date, String? description
 });
 
 
@@ -62,14 +62,15 @@ class _$TimeLogCopyWithImpl<$Res>
 
 /// Create a copy of TimeLog
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? projectId = null,Object? taskId = null,Object? userId = null,Object? hoursLogged = null,Object? description = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? projectId = null,Object? taskId = null,Object? userId = null,Object? hoursLogged = null,Object? date = null,Object? description = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
 as String,taskId: null == taskId ? _self.taskId : taskId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,hoursLogged: null == hoursLogged ? _self.hoursLogged : hoursLogged // ignore: cast_nullable_to_non_nullable
-as double,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as double,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String projectId,  String taskId,  String userId,  double hoursLogged,  String? description)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String projectId,  String taskId,  String userId,  double hoursLogged,  DateTime date,  String? description)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TimeLog() when $default != null:
-return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLogged,_that.description);case _:
+return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLogged,_that.date,_that.description);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLo
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String projectId,  String taskId,  String userId,  double hoursLogged,  String? description)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String projectId,  String taskId,  String userId,  double hoursLogged,  DateTime date,  String? description)  $default,) {final _that = this;
 switch (_that) {
 case _TimeLog():
-return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLogged,_that.description);case _:
+return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLogged,_that.date,_that.description);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +197,10 @@ return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLo
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String projectId,  String taskId,  String userId,  double hoursLogged,  String? description)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String projectId,  String taskId,  String userId,  double hoursLogged,  DateTime date,  String? description)?  $default,) {final _that = this;
 switch (_that) {
 case _TimeLog() when $default != null:
-return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLogged,_that.description);case _:
+return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLogged,_that.date,_that.description);case _:
   return null;
 
 }
@@ -211,7 +212,7 @@ return $default(_that.id,_that.projectId,_that.taskId,_that.userId,_that.hoursLo
 
 
 class _TimeLog implements TimeLog {
-  const _TimeLog({required this.id, required this.projectId, required this.taskId, required this.userId, required this.hoursLogged, this.description});
+  const _TimeLog({required this.id, required this.projectId, required this.taskId, required this.userId, required this.hoursLogged, required this.date, this.description});
   
 
 @override final  String id;
@@ -219,6 +220,7 @@ class _TimeLog implements TimeLog {
 @override final  String taskId;
 @override final  String userId;
 @override final  double hoursLogged;
+@override final  DateTime date;
 @override final  String? description;
 
 /// Create a copy of TimeLog
@@ -231,16 +233,16 @@ _$TimeLogCopyWith<_TimeLog> get copyWith => __$TimeLogCopyWithImpl<_TimeLog>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimeLog&&(identical(other.id, id) || other.id == id)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&(identical(other.taskId, taskId) || other.taskId == taskId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.hoursLogged, hoursLogged) || other.hoursLogged == hoursLogged)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TimeLog&&(identical(other.id, id) || other.id == id)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&(identical(other.taskId, taskId) || other.taskId == taskId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.hoursLogged, hoursLogged) || other.hoursLogged == hoursLogged)&&(identical(other.date, date) || other.date == date)&&(identical(other.description, description) || other.description == description));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,projectId,taskId,userId,hoursLogged,description);
+int get hashCode => Object.hash(runtimeType,id,projectId,taskId,userId,hoursLogged,date,description);
 
 @override
 String toString() {
-  return 'TimeLog(id: $id, projectId: $projectId, taskId: $taskId, userId: $userId, hoursLogged: $hoursLogged, description: $description)';
+  return 'TimeLog(id: $id, projectId: $projectId, taskId: $taskId, userId: $userId, hoursLogged: $hoursLogged, date: $date, description: $description)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$TimeLogCopyWith<$Res> implements $TimeLogCopyWith<$Res> {
   factory _$TimeLogCopyWith(_TimeLog value, $Res Function(_TimeLog) _then) = __$TimeLogCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String projectId, String taskId, String userId, double hoursLogged, String? description
+ String id, String projectId, String taskId, String userId, double hoursLogged, DateTime date, String? description
 });
 
 
@@ -268,14 +270,15 @@ class __$TimeLogCopyWithImpl<$Res>
 
 /// Create a copy of TimeLog
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? projectId = null,Object? taskId = null,Object? userId = null,Object? hoursLogged = null,Object? description = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? projectId = null,Object? taskId = null,Object? userId = null,Object? hoursLogged = null,Object? date = null,Object? description = freezed,}) {
   return _then(_TimeLog(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
 as String,taskId: null == taskId ? _self.taskId : taskId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,hoursLogged: null == hoursLogged ? _self.hoursLogged : hoursLogged // ignore: cast_nullable_to_non_nullable
-as double,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as double,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as DateTime,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

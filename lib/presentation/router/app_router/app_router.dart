@@ -17,7 +17,7 @@ GoRouter appRouter(Ref ref) {
   final notifier = ref.watch(routerProvider.notifier);
   return GoRouter(
     navigatorKey: key,
-    initialLocation: HomeRoute.pagePath,
+    initialLocation: DashboardRoute.pagePath,
     refreshListenable: notifier,
     redirect: notifier.redirect,
     routes: appRoutes,

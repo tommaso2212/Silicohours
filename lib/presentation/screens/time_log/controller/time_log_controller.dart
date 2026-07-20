@@ -11,7 +11,7 @@ Future<List<TimeLog>> Function(int, int) fetchTimeLogs(Ref ref) {
   final repo = ref.watch(timeLogRepositoryProvider);
   final usecase = GetAllTimeLogsUsecase(timeLogRepository: repo);
   return (page, limit) => usecase
-      .execute((pageIndex: page, pageSize: limit, projectId: null, taskId: null, userId: null))
+      .execute((pageIndex: page, pageSize: limit, projectId: null, taskId: null, userId: null, date: null))
       .map(onResult: (result) => result, onError: (error) => []);
 }
 
