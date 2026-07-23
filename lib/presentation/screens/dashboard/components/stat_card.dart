@@ -12,32 +12,35 @@ class StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: Wrap(
-        spacing: 16,
-        runSpacing: 8,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(8)),
-            padding: EdgeInsets.all(8),
-            child: icon,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                softWrap: true,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceMuted),
-              ),
-              Text(
-                value,
-                softWrap: true,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.onSurface),
-              ),
-            ],
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Wrap(
+          spacing: 16,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(8)),
+              padding: EdgeInsets.all(8),
+              child: icon,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceMuted),
+                ),
+                Text(
+                  value,
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppColors.onSurface),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

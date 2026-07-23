@@ -55,7 +55,7 @@ final class FetchTimeLogsProvider
   }
 }
 
-String _$fetchTimeLogsHash() => r'c749c2f5a194428986c6e31adb98d3e6fd9f709a';
+String _$fetchTimeLogsHash() => r'8fdd46c0ffc8e915d8eda00b2c8d9a4cbb2e72b5';
 
 @ProviderFor(createTimeLogUsecase)
 final createTimeLogUsecaseProvider = CreateTimeLogUsecaseProvider._();

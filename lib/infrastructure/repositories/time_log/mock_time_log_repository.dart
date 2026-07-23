@@ -9,7 +9,7 @@ class MockTimeLogRepository implements TimeLogRepository {
       taskId: 't1',
       userId: '1',
       hoursLogged: 3.0,
-      date: DateTime(2026, 7, 13),
+      date: DateTime.now(),
       description: 'Initial wireframe review',
     ),
     TimeLog(id: 'tl2', projectId: 'p1', taskId: 't2', userId: '2', hoursLogged: 5.5, date: DateTime(2026, 7, 14)),
