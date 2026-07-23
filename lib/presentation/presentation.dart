@@ -1,6 +1,7 @@
 export 'router/app_router/app_router.dart';
 export 'router/routes.dart';
 export 'screens/dashboard/dashboard_screen.dart';
+export 'screens/login/login_screen.dart';
 export 'screens/user/user_screen.dart';
 export 'screens/project/project_screen.dart';
 export 'screens/project_detail/project_detail_screen.dart';

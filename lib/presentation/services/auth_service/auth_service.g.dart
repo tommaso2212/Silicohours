@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'router_notifier.dart';
+part of 'auth_service.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,43 +9,43 @@ part of 'router_notifier.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(RouterNotifier)
-final routerProvider = RouterNotifierProvider._();
+@ProviderFor(AuthService)
+final authServiceProvider = AuthServiceProvider._();
 
-final class RouterNotifierProvider
-    extends $AsyncNotifierProvider<RouterNotifier, bool> {
-  RouterNotifierProvider._()
+final class AuthServiceProvider
+    extends $AsyncNotifierProvider<AuthService, User?> {
+  AuthServiceProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'routerProvider',
-        isAutoDispose: true,
+        name: r'authServiceProvider',
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$routerNotifierHash();
+  String debugGetCreateSourceHash() => _$authServiceHash();
 
   @$internal
   @override
-  RouterNotifier create() => RouterNotifier();
+  AuthService create() => AuthService();
 }
 
-String _$routerNotifierHash() => r'ed98e285ad49e2eea9558c466baea7cb357381f8';
+String _$authServiceHash() => r'b2a52b6fbda086b6116361923e44637d5b21e769';
 
-abstract class _$RouterNotifier extends $AsyncNotifier<bool> {
-  FutureOr<bool> build();
+abstract class _$AuthService extends $AsyncNotifier<User?> {
+  FutureOr<User?> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<bool>, bool>;
+    final ref = this.ref as $Ref<AsyncValue<User?>, User?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<bool>, bool>,
-              AsyncValue<bool>,
+              AnyNotifier<AsyncValue<User?>, User?>,
+              AsyncValue<User?>,
               Object?,
               Object?
             >;

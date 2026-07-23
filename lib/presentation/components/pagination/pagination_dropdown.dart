@@ -170,6 +170,10 @@ class _PaginationDropdownMenuState<T> extends State<_PaginationDropdownMenu<T>> 
 }
 
 class DropdownController<T> extends TextEditingController {
+  DropdownController({T? initialValue}) {
+    item = initialValue;
+  }
+
   T? _item;
 
   set item(T? item) {
