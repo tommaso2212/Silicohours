@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/router/routes.dart';
 import 'package:silicohours/presentation/services/auth_service/auth_service.dart';
 
@@ -21,11 +22,13 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
     final authState = ref.read(authServiceProvider);
     if (authState.isLoading) return null;
 
-    final isLoggedIn = authState.value != null;
+    final user = authState.value;
+    final isLoggedIn = user != null;
     final isLoggingIn = routerState.matchedLocation == LoginRoute.pagePath;
 
     if (!isLoggedIn) return isLoggingIn ? null : LoginRoute.pagePath;
     if (isLoggingIn) return DashboardRoute.pagePath;
+    if (!user.isAdmin && isAdminOnlyLocation(routerState.matchedLocation)) return DashboardRoute.pagePath;
     return null;
   }
 

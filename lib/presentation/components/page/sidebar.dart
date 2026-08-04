@@ -46,7 +46,7 @@ class _SidebarHeader extends StatelessWidget {
   }
 }
 
-class _SidebarRoutes extends StatelessWidget {
+class _SidebarRoutes extends ConsumerWidget {
   const _SidebarRoutes();
 
   String? getCurrentPath(BuildContext context) {
@@ -66,15 +66,16 @@ class _SidebarRoutes extends StatelessWidget {
   };
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentPath = getCurrentPath(context);
+    final isAdmin = ref.watch(authServiceProvider).value?.isAdmin ?? false;
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         spacing: 8,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: sidebarRoutes
+        children: sidebarRoutesFor(isAdmin: isAdmin)
             .map(
               (e) => ElevatedButton.icon(
                 onPressed: () => context.go(e.path),

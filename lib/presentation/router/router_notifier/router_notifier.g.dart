@@ -33,7 +33,7 @@ final class RouterNotifierProvider
   RouterNotifier create() => RouterNotifier();
 }
 
-String _$routerNotifierHash() => r'ed98e285ad49e2eea9558c466baea7cb357381f8';
+String _$routerNotifierHash() => r'4d6376a84216cefe6a72b274f5a7c4a010bbef44';
 
 abstract class _$RouterNotifier extends $AsyncNotifier<bool> {
   FutureOr<bool> build();

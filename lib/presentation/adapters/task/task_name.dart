@@ -13,15 +13,23 @@ final _taskByIdProvider = FutureProvider.family<Task, ({String projectId, String
 });
 
 class TaskName extends ConsumerWidget {
-  const TaskName({required String this.projectId, required String this.taskId, this.iconRadius = 12, super.key})
-    : task = null;
-  const TaskName.task({required Task this.task, this.iconRadius = 12, super.key}) : projectId = null, taskId = null;
+  const TaskName({
+    required String this.projectId,
+    required String this.taskId,
+    this.iconRadius = 12,
+    this.trailing,
+    super.key,
+  }) : task = null;
+  const TaskName.task({required Task this.task, this.iconRadius = 12, this.trailing, super.key})
+    : projectId = null,
+      taskId = null;
 
   final String? projectId;
   final String? taskId;
   final Task? task;
 
   final double iconRadius;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,7 +52,15 @@ class TaskName extends ConsumerWidget {
         constraints: BoxConstraints(maxWidth: 200),
         padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
         decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(12)),
-        child: Text(task.name, style: Theme.of(context).textTheme.labelMedium, softWrap: true),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: AppSpacing.sm,
+          children: [
+            Flexible(child: Text(task.name, style: Theme.of(context).textTheme.labelMedium, softWrap: true)),
+            ?trailing,
+          ],
+        ),
       ),
     );
   }

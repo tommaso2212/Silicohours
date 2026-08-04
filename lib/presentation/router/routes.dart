@@ -6,6 +6,12 @@ import '../screens/project_detail/project_detail_screen.dart';
 import '../screens/time_log/time_log_screen.dart';
 import '../screens/user/user_screen.dart';
 
+/// Marks a route that is only reachable by users with [Role.admin].
+///
+/// Such routes are filtered out of the sidebar and blocked by
+/// `RouterNotifier.redirect` for everyone else.
+mixin AdminRoute on GoRoute {}
+
 class DashboardRoute extends GoRoute {
   DashboardRoute()
     : super(path: pagePath, name: 'Dashboard', builder: (context, state) => const DashboardScreen());
@@ -13,7 +19,7 @@ class DashboardRoute extends GoRoute {
   static const String pagePath = '/';
 }
 
-class UserRoute extends GoRoute {
+class UserRoute extends GoRoute with AdminRoute {
   UserRoute() : super(path: pagePath, name: 'Users', builder: (context, state) => const UserScreen());
 
   static const String pagePath = '/users';
@@ -54,3 +60,12 @@ class LoginRoute extends GoRoute {
 List<GoRoute> sidebarRoutes = [DashboardRoute(), UserRoute(), ProjectRoute(), TimeLogRoute()];
 
 List<GoRoute> get appRoutes => [...sidebarRoutes, LoginRoute()];
+
+/// Routes to show in the sidebar for a user with the given admin status.
+List<GoRoute> sidebarRoutesFor({required bool isAdmin}) =>
+    sidebarRoutes.where((route) => isAdmin || route is! AdminRoute).toList();
+
+/// Whether [location] points at an [AdminRoute] (or one of its sub-routes).
+bool isAdminOnlyLocation(String location) => appRoutes
+    .whereType<AdminRoute>()
+    .any((route) => location == route.path || location.startsWith('${route.path}/'));

@@ -20,9 +20,13 @@ class MockProjectRepository implements ProjectRepository {
   int _nextId = 13;
 
   @override
-  Future<List<Project>> getAllProjects({int? pageIndex, int? pageSize, String? q}) async {
+  Future<List<Project>> getAllProjects({int? pageIndex, int? pageSize, String? q, List<String>? ids}) async {
     await Future.delayed(const Duration(milliseconds: 800));
     var result = _projects.toList();
+
+    if (ids != null) {
+      result = result.where((p) => ids.contains(p.id)).toList();
+    }
 
     if (q != null && q.isNotEmpty) {
       final query = q.toLowerCase();
