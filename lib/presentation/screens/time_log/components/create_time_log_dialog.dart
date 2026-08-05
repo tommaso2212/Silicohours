@@ -74,7 +74,7 @@ class CreateTimeLogDialog extends HookConsumerWidget {
         children: [
           ProjectDropdown(controller: projectDropdownController),
           TaskDropdown(projectId: projectId, controller: taskDropdownController),
-          UserDropdown(controller: userDropdownController),
+          if (user?.isAdmin ?? false) UserDropdown(controller: userDropdownController),
           DatePicker(date: date.value, onChanged: (picked) => date.value = picked),
           TextField(
             controller: hoursController,

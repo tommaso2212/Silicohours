@@ -25,6 +25,9 @@ extension UserExtension on User {
   /// Only admins can add or remove members from a project.
   bool get canManageMemberships => isAdmin;
 
+  /// Admins see time logs for every user; everyone else only sees their own.
+  bool get canViewAllTimeLogs => isAdmin;
+
   bool canAccessProject(String projectId, List<ProjectMembership> memberships) =>
       canManageAllProjects || memberships.any((m) => m.userId == id && m.projectId == projectId);
 

@@ -23,7 +23,7 @@ class SectionHeader extends StatelessWidget {
               Text(
                 title,
                 softWrap: true,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
               ),
               if (description != null)
                 Text(

@@ -8,6 +8,7 @@ import 'package:silicohours/presentation/router/routes.dart';
 import 'package:silicohours/presentation/screens/project/components/edit_project_dialog.dart';
 import 'package:silicohours/presentation/screens/project/components/project_card.dart';
 import 'package:silicohours/presentation/screens/project/controller/project_section_controller.dart';
+import 'package:silicohours/presentation/services/auth_service/auth_service.dart';
 import 'package:silicohours/presentation/services/dialog_service/dialog_service.dart';
 import 'package:silicohours/presentation/theme/app_breakpoints.dart';
 
@@ -21,6 +22,8 @@ class ProjectsSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fetchItems = ref.watch(fetchProjectsProvider);
+    final isAdmin = ref.watch(authServiceProvider).value?.isAdmin ?? false;
+    final columns = isAdmin ? _columns : _columns.sublist(0, _columns.length - 1);
 
     return context.onMobile(
       onMobile: () => PaginationList.sliver(
@@ -28,8 +31,8 @@ class ProjectsSection extends ConsumerWidget {
         fetchItems: fetchItems,
         itemBuilder: (item) => ProjectCard(
           project: item,
-          onTap: () => context.go(ProjectRoute.pathForDetails(item.id)),
-          actionMenu: _ProjectActionMenu(project: item),
+          onTap: isAdmin ? () => context.go(ProjectRoute.pathForDetails(item.id)) : null,
+          actionMenu: isAdmin ? _ProjectActionMenu(project: item) : null,
         ),
       ),
       orElse: () => SliverToBoxAdapter(
@@ -37,9 +40,9 @@ class ProjectsSection extends ConsumerWidget {
           child: PaginationDataTable(
             scrollController: scrollController,
             fetchItems: fetchItems,
-            columnsNumber: _columns.length,
-            headerBuilder: (index) => Text(_columns[index]),
-            onRowTap: (item) => context.go(ProjectRoute.pathForDetails(item.id)),
+            columnsNumber: columns.length,
+            headerBuilder: (index) => Text(columns[index]),
+            onRowTap: isAdmin ? (Project item) => context.go(ProjectRoute.pathForDetails(item.id)) : null,
             cellBuilder: (index, project) => switch (index) {
               0 => ProjectName.project(project: project),
               1 => Text('€${project.hourPrice.toStringAsFixed(2)}/h'),

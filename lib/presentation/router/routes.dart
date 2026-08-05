@@ -25,19 +25,24 @@ class UserRoute extends GoRoute with AdminRoute {
   static const String pagePath = '/users';
 }
 
+class ProjectDetailRoute extends GoRoute with AdminRoute {
+  ProjectDetailRoute()
+    : super(
+        path: pathSegment,
+        redirect: (context, state) => state.pathParameters['id'] == null ? ProjectRoute.pagePath : null,
+        builder: (context, state) => ProjectDetailScreen(projectId: state.pathParameters['id']!),
+      );
+
+  static const String pathSegment = ':id';
+}
+
 class ProjectRoute extends GoRoute {
   ProjectRoute()
     : super(
         path: pagePath,
         name: 'Projects',
         builder: (context, state) => const ProjectScreen(),
-        routes: [
-          GoRoute(
-            path: ':id',
-            redirect: (context, state) => state.pathParameters['id'] == null ? pagePath : null,
-            builder: (context, state) => ProjectDetailScreen(projectId: state.pathParameters['id']!),
-          ),
-        ],
+        routes: [ProjectDetailRoute()],
       );
 
   static const String pagePath = '/projects';
@@ -65,7 +70,29 @@ List<GoRoute> get appRoutes => [...sidebarRoutes, LoginRoute()];
 List<GoRoute> sidebarRoutesFor({required bool isAdmin}) =>
     sidebarRoutes.where((route) => isAdmin || route is! AdminRoute).toList();
 
-/// Whether [location] points at an [AdminRoute] (or one of its sub-routes).
-bool isAdminOnlyLocation(String location) => appRoutes
-    .whereType<AdminRoute>()
-    .any((route) => location == route.path || location.startsWith('${route.path}/'));
+/// Whether [location] points at an [AdminRoute] (or a sub-route of one), searching the whole route tree
+/// (including nested routes such as [ProjectDetailRoute]).
+bool isAdminOnlyLocation(String location) => _matchesAdminRoute(appRoutes, '', location);
+
+bool _matchesAdminRoute(List<RouteBase> routes, String parentPath, String location) {
+  for (final route in routes) {
+    if (route is! GoRoute) continue;
+    final fullPath = parentPath.isEmpty ? route.path : '$parentPath/${route.path}';
+    if (route is AdminRoute && _pathMatchesLocation(fullPath, location)) return true;
+    if (_matchesAdminRoute(route.routes, fullPath, location)) return true;
+  }
+  return false;
+}
+
+/// Matches a route [template] (which may contain `:param` segments) against a real [location], also
+/// matching sub-paths of the template (e.g. `/projects/:id` matches `/projects/abc/whatever`).
+bool _pathMatchesLocation(String template, String location) {
+  final templateSegments = template.split('/').where((segment) => segment.isNotEmpty).toList();
+  final locationSegments = location.split('/').where((segment) => segment.isNotEmpty).toList();
+  if (locationSegments.length < templateSegments.length) return false;
+  for (var i = 0; i < templateSegments.length; i++) {
+    final segment = templateSegments[i];
+    if (!segment.startsWith(':') && segment != locationSegments[i]) return false;
+  }
+  return true;
+}
