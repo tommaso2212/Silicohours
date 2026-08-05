@@ -1,6 +1,6 @@
 import 'package:silicohours/application/application.dart';
 
-typedef GetHoursLoggedLastWeekInput = ();
+typedef GetHoursLoggedLastWeekInput = ({String userId});
 
 class GetHoursLoggedLastWeekUsecase extends Usecase<Map<DateTime, double>, GetHoursLoggedLastWeekInput> {
   final StatsRepository _statsRepository;
@@ -18,7 +18,7 @@ class GetHoursLoggedLastWeekUsecase extends Usecase<Map<DateTime, double>, GetHo
     final todayDate = DateTime(today.year, today.month, today.day);
     final from = todayDate.subtract(const Duration(days: 6));
 
-    final hoursByDay = await _statsRepository.getHoursByProjectPerDay(from: from, to: todayDate);
+    final hoursByDay = await _statsRepository.getHoursByProjectPerDay(from: from, to: todayDate, userId: input.userId);
 
     return {
       for (var i = 0; i < 7; i++)

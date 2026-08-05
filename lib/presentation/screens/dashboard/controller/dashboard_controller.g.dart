@@ -41,7 +41,76 @@ final class FetchHoursLoggedTodayProvider
 }
 
 String _$fetchHoursLoggedTodayHash() =>
-    r'8e947da80160ea4bd84843b9d9626fa123327fc6';
+    r'5e8d2c3fa8b6da7d8f9d2b5a9006bb049fe6fab6';
+
+@ProviderFor(fetchHoursLoggedThisWeek)
+final fetchHoursLoggedThisWeekProvider = FetchHoursLoggedThisWeekProvider._();
+
+final class FetchHoursLoggedThisWeekProvider
+    extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
+    with $FutureModifier<double>, $FutureProvider<double> {
+  FetchHoursLoggedThisWeekProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'fetchHoursLoggedThisWeekProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$fetchHoursLoggedThisWeekHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<double> create(Ref ref) {
+    return fetchHoursLoggedThisWeek(ref);
+  }
+}
+
+String _$fetchHoursLoggedThisWeekHash() =>
+    r'a06b0e33d0f7c597418359ab3d7957f385569696';
+
+@ProviderFor(fetchHoursLoggedCurrentMonth)
+final fetchHoursLoggedCurrentMonthProvider =
+    FetchHoursLoggedCurrentMonthProvider._();
+
+final class FetchHoursLoggedCurrentMonthProvider
+    extends $FunctionalProvider<AsyncValue<double>, double, FutureOr<double>>
+    with $FutureModifier<double>, $FutureProvider<double> {
+  FetchHoursLoggedCurrentMonthProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'fetchHoursLoggedCurrentMonthProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$fetchHoursLoggedCurrentMonthHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<double> create(Ref ref) {
+    return fetchHoursLoggedCurrentMonth(ref);
+  }
+}
+
+String _$fetchHoursLoggedCurrentMonthHash() =>
+    r'd7073b26f9227dec8d9a432a720a193066a50826';
 
 @ProviderFor(fetchHoursLoggedLastWeek)
 final fetchHoursLoggedLastWeekProvider = FetchHoursLoggedLastWeekProvider._();
@@ -83,7 +152,7 @@ final class FetchHoursLoggedLastWeekProvider
 }
 
 String _$fetchHoursLoggedLastWeekHash() =>
-    r'66c5b20b812f66bb76a15de2ea7ea425a5c6cf15';
+    r'ffcb914ffbbc3cadf3ad32a20844a9c9a63a0766';
 
 @ProviderFor(fetchHoursLoggedLastWeekByProject)
 final fetchHoursLoggedLastWeekByProjectProvider =
@@ -127,4 +196,92 @@ final class FetchHoursLoggedLastWeekByProjectProvider
 }
 
 String _$fetchHoursLoggedLastWeekByProjectHash() =>
-    r'1b6e98f1387484368ff95f0c633bead5b62a96a8';
+    r'465e1215ca61dd4af34e1ed304262b31239da471';
+
+@ProviderFor(fetchHoursLoggedCurrentWeekByProject)
+final fetchHoursLoggedCurrentWeekByProjectProvider =
+    FetchHoursLoggedCurrentWeekByProjectProvider._();
+
+final class FetchHoursLoggedCurrentWeekByProjectProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ProjectWeekHours>>,
+          List<ProjectWeekHours>,
+          FutureOr<List<ProjectWeekHours>>
+        >
+    with
+        $FutureModifier<List<ProjectWeekHours>>,
+        $FutureProvider<List<ProjectWeekHours>> {
+  FetchHoursLoggedCurrentWeekByProjectProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'fetchHoursLoggedCurrentWeekByProjectProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$fetchHoursLoggedCurrentWeekByProjectHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ProjectWeekHours>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ProjectWeekHours>> create(Ref ref) {
+    return fetchHoursLoggedCurrentWeekByProject(ref);
+  }
+}
+
+String _$fetchHoursLoggedCurrentWeekByProjectHash() =>
+    r'71fc99da273c3cdaa0a3ee7479cf6b9774dc5852';
+
+@ProviderFor(fetchHoursLoggedCurrentMonthByProject)
+final fetchHoursLoggedCurrentMonthByProjectProvider =
+    FetchHoursLoggedCurrentMonthByProjectProvider._();
+
+final class FetchHoursLoggedCurrentMonthByProjectProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ProjectHours>>,
+          List<ProjectHours>,
+          FutureOr<List<ProjectHours>>
+        >
+    with
+        $FutureModifier<List<ProjectHours>>,
+        $FutureProvider<List<ProjectHours>> {
+  FetchHoursLoggedCurrentMonthByProjectProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'fetchHoursLoggedCurrentMonthByProjectProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$fetchHoursLoggedCurrentMonthByProjectHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ProjectHours>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ProjectHours>> create(Ref ref) {
+    return fetchHoursLoggedCurrentMonthByProject(ref);
+  }
+}
+
+String _$fetchHoursLoggedCurrentMonthByProjectHash() =>
+    r'e254ed7c8f2ec659f3d02c9f226a336edcf32b16';

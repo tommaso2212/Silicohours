@@ -1,15 +1,13 @@
 import 'package:silicohours/application/application.dart';
-import 'package:silicohours/domain/domain.dart';
 
-typedef GetHoursLoggedLastWeekByProjectInput = ({String userId});
-typedef ProjectHours = ({Project project, double hours});
+typedef GetHoursLoggedCurrentMonthByProjectInput = ({String userId});
 
-class GetHoursLoggedLastWeekByProjectUsecase
-    extends Usecase<List<ProjectHours>, GetHoursLoggedLastWeekByProjectInput> {
+class GetHoursLoggedCurrentMonthByProjectUsecase
+    extends Usecase<List<ProjectHours>, GetHoursLoggedCurrentMonthByProjectInput> {
   final StatsRepository _statsRepository;
   final ProjectRepository _projectRepository;
 
-  const GetHoursLoggedLastWeekByProjectUsecase({
+  const GetHoursLoggedCurrentMonthByProjectUsecase({
     required this._statsRepository,
     required this._projectRepository,
     super.successHandlers,
@@ -18,10 +16,10 @@ class GetHoursLoggedLastWeekByProjectUsecase
   });
 
   @override
-  Future<List<ProjectHours>> call(GetHoursLoggedLastWeekByProjectInput input) async {
+  Future<List<ProjectHours>> call(GetHoursLoggedCurrentMonthByProjectInput input) async {
     final today = DateTime.now();
     final todayDate = DateTime(today.year, today.month, today.day);
-    final from = todayDate.subtract(const Duration(days: 6));
+    final from = DateTime(today.year, today.month, 1);
 
     final hoursByDay = await _statsRepository.getHoursByProjectPerDay(from: from, to: todayDate, userId: input.userId);
 

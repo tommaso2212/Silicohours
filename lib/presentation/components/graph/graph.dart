@@ -15,13 +15,15 @@ enum _GraphType { line, histogram, donut }
 
 class Graph extends StatefulWidget {
   const Graph.line({
-    required this.values,
+    required this.series,
     this.colorBuilder,
-    this.tooltipBuilder,
+    this.seriesTooltipBuilder,
     this.xGridDescriptionBuilder,
     this.constraints,
     super.key,
-  }) : _graphType = _GraphType.line;
+  }) : _graphType = _GraphType.line,
+       values = const [],
+       tooltipBuilder = null;
 
   const Graph.histogram({
     required this.values,
@@ -30,14 +32,20 @@ class Graph extends StatefulWidget {
     this.xGridDescriptionBuilder,
     this.constraints,
     super.key,
-  }) : _graphType = _GraphType.histogram;
+  }) : _graphType = _GraphType.histogram,
+       series = const [],
+       seriesTooltipBuilder = null;
 
   const Graph.donut({required this.values, this.colorBuilder, this.tooltipBuilder, this.constraints, super.key})
     : _graphType = _GraphType.donut,
-      xGridDescriptionBuilder = null;
+      series = const [],
+      xGridDescriptionBuilder = null,
+      seriesTooltipBuilder = null;
 
   final List<double> values;
+  final List<List<double>> series;
   final String Function(int index)? tooltipBuilder;
+  final String Function(int seriesIndex, int valueIndex)? seriesTooltipBuilder;
   final Color Function(int index)? colorBuilder;
   final String Function(int index)? xGridDescriptionBuilder;
 
@@ -71,8 +79,8 @@ class _GraphState extends State<Graph> {
         child: CustomPaint(
           painter: switch (widget._graphType) {
             _GraphType.line => GraphLinePainter(
-              values: widget.values,
-              tooltipBuilder: widget.tooltipBuilder,
+              series: widget.series,
+              seriesTooltipBuilder: widget.seriesTooltipBuilder,
               touchOffset: touchOffset,
               descriptionStyle: descriptionStyle,
               tooltipStyle: tooltipStyle,

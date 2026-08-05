@@ -108,7 +108,7 @@ final class FetchProjectsProvider
   }
 }
 
-String _$fetchProjectsHash() => r'ff07c1f1264221256be34cb32c2ca40b202dbc4f';
+String _$fetchProjectsHash() => r'22a4d77a7b7a24540d08ac5e7a9ff8ba03098ff3';
 
 @ProviderFor(deleteProjectUsecase)
 final deleteProjectUsecaseProvider = DeleteProjectUsecaseProvider._();
