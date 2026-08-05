@@ -7,9 +7,10 @@ import 'package:silicohours/presentation/adapters/user/user_name.dart';
 import 'package:silicohours/presentation/components/components.dart';
 
 class UserDropdown extends ConsumerWidget {
-  const UserDropdown({required this.controller, super.key});
+  const UserDropdown({required this.controller, this.showRole = false, super.key});
 
   final DropdownController<User> controller;
+  final bool showRole;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +20,7 @@ class UserDropdown extends ConsumerWidget {
       fetchItems: (page, pageSize, q) => GetAllUsersUsecase(
         userRepository: ref.read(userRepositoryProvider),
       ).execute((pageIndex: page, pageSize: pageSize, q: q)).map(onResult: (result) => result, onError: (_) => []),
-      itemBuilder: (item) => UserName.user(user: item, showRole: false),
+      itemBuilder: (item) => UserName.user(user: item, showRole: showRole),
     );
   }
 }

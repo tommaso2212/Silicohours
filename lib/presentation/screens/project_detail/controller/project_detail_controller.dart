@@ -51,3 +51,39 @@ DeleteTaskUsecase deleteTaskUsecase(Ref ref) {
     errorHandlers: [ref.dialogExceptionHandler()],
   );
 }
+
+@riverpod
+Future<List<ProjectMembership>> Function(int, int) fetchProjectMemberships(Ref ref, String projectId) {
+  final repo = ref.watch(projectMembershipRepositoryProvider);
+  final usecase = GetProjectMembershipsUsecase(projectMembershipRepository: repo);
+  return (page, limit) => usecase
+      .execute((projectId: projectId, pageIndex: page, pageSize: limit))
+      .map(onResult: (result) => result, onError: (error) => []);
+}
+
+@Riverpod(keepAlive: true)
+AddProjectMemberUsecase addProjectMemberUsecase(Ref ref) {
+  return AddProjectMemberUsecase(
+    projectMembershipRepository: ref.watch(projectMembershipRepositoryProvider),
+    successHandlers: [
+      ref.dialogSuccessHandler(message: 'Member added to the project'),
+      (_, _) async => ref.invalidate(fetchProjectMembershipsProvider),
+    ],
+    errorHandlers: [ref.dialogExceptionHandler()],
+  );
+}
+
+@Riverpod(keepAlive: true)
+RemoveProjectMemberUsecase removeProjectMemberUsecase(Ref ref) {
+  return RemoveProjectMemberUsecase(
+    projectMembershipRepository: ref.watch(projectMembershipRepositoryProvider),
+    validatorHandlers: [
+      ref.dialogConfirmHandler(message: 'Are you sure you want to remove this member from the project?'),
+    ],
+    successHandlers: [
+      ref.dialogSuccessHandler(message: 'Member removed from the project'),
+      (_, _) async => ref.invalidate(fetchProjectMembershipsProvider),
+    ],
+    errorHandlers: [ref.dialogExceptionHandler()],
+  );
+}

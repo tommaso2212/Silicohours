@@ -2,13 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:silicohours/presentation/components/pagination/pagination.dart';
 
 class PaginationList<T> extends StatelessWidget {
-  const PaginationList({required this.fetchItems, required this.itemBuilder, this.scrollController, super.key})
-    : _sliver = false;
-  const PaginationList.sliver({required this.fetchItems, required this.itemBuilder, this.scrollController, super.key})
-    : _sliver = true;
+  const PaginationList({
+    required this.fetchItems,
+    required this.itemBuilder,
+    this.emptyBuilder,
+    this.scrollController,
+    super.key,
+  }) : _sliver = false;
+  const PaginationList.sliver({
+    required this.fetchItems,
+    required this.itemBuilder,
+    this.emptyBuilder,
+    this.scrollController,
+    super.key,
+  }) : _sliver = true;
 
   final Future<List<T>> Function(int page, int limit) fetchItems;
   final Widget Function(T item) itemBuilder;
+  final Widget Function()? emptyBuilder;
 
   final ScrollController? scrollController;
   final bool _sliver;
@@ -19,6 +30,7 @@ class PaginationList<T> extends StatelessWidget {
       return Pagination.sliver(
         fetchItems: fetchItems,
         scrollController: scrollController,
+        emptyBuilder: emptyBuilder,
         itemsBuilder: (items) => SliverList.separated(
           itemCount: items.length,
           separatorBuilder: (context, index) => const SizedBox.square(dimension: 8),
@@ -29,6 +41,7 @@ class PaginationList<T> extends StatelessWidget {
     return Pagination(
       fetchItems: fetchItems,
       scrollController: scrollController,
+      emptyBuilder: emptyBuilder,
       itemsBuilder: (items) => ListView.separated(
         shrinkWrap: true,
         separatorBuilder: (context, index) => const SizedBox.square(dimension: 8),

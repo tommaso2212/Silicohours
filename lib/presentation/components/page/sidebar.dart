@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:silicohours/domain/domain.dart';
+import 'package:silicohours/presentation/adapters/user/role_chip.dart';
 import 'package:silicohours/presentation/components/icons/initials_avatar.dart';
 import 'package:silicohours/presentation/components/page/logo.dart';
 import 'package:silicohours/presentation/router/routes.dart';
-import 'package:silicohours/presentation/theme/app_colors.dart';
+import 'package:silicohours/presentation/services/auth_service/auth_service.dart';
 import 'package:silicohours/presentation/theme/app_spacing.dart';
 
 class Sidebar extends StatelessWidget {
@@ -43,7 +46,7 @@ class _SidebarHeader extends StatelessWidget {
   }
 }
 
-class _SidebarRoutes extends StatelessWidget {
+class _SidebarRoutes extends ConsumerWidget {
   const _SidebarRoutes();
 
   String? getCurrentPath(BuildContext context) {
@@ -55,7 +58,7 @@ class _SidebarRoutes extends StatelessWidget {
   }
 
   Widget? routeIcon(String path) => switch (path) {
-    HomeRoute.pagePath => Icon(Icons.home_outlined),
+    DashboardRoute.pagePath => Icon(Icons.dashboard_outlined),
     UserRoute.pagePath => Icon(Icons.people_outline_rounded),
     ProjectRoute.pagePath => Icon(Icons.folder_outlined),
     TimeLogRoute.pagePath => Icon(Icons.access_time_outlined),
@@ -63,15 +66,16 @@ class _SidebarRoutes extends StatelessWidget {
   };
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentPath = getCurrentPath(context);
+    final isAdmin = ref.watch(authServiceProvider).value?.isAdmin ?? false;
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         spacing: 8,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: sidebarRoutes
+        children: sidebarRoutesFor(isAdmin: isAdmin)
             .map(
               (e) => ElevatedButton.icon(
                 onPressed: () => context.go(e.path),
@@ -90,11 +94,12 @@ class _SidebarRoutes extends StatelessWidget {
   }
 }
 
-class _SidebarFooter extends StatelessWidget {
+class _SidebarFooter extends ConsumerWidget {
   const _SidebarFooter();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authServiceProvider).value;
     return Container(
       decoration: BoxDecoration(
         border: Border(top: BorderSide(width: 2, color: Theme.of(context).dividerColor)),
@@ -104,23 +109,23 @@ class _SidebarFooter extends StatelessWidget {
         spacing: 10,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          InitialsAvatar(initials: 'MR'),
+          InitialsAvatar(initials: user?.initials ?? ''),
           Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 4,
               children: [
-                Text('Mario Rossi', softWrap: true, style: Theme.of(context).textTheme.bodyMedium),
-                Text(
-                  'Ruolo',
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceMuted),
-                ),
+                Text(user?.fullName ?? '', softWrap: true, style: Theme.of(context).textTheme.bodyMedium),
+                if (user != null) RoleChip(role: user.role),
               ],
             ),
           ),
-          IconButton(tooltip: 'Logout', onPressed: () {}, icon: Icon(Icons.logout)),
+          IconButton(
+            tooltip: 'Logout',
+            onPressed: () => ref.read(authServiceProvider.notifier).logout(),
+            icon: Icon(Icons.logout),
+          ),
         ],
       ),
     );

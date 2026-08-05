@@ -137,7 +137,7 @@ class _Appbar extends ConsumerWidget {
                   icon: isSidebarExtended ? AppIcons.leftPanelClose : AppIcons.leftPanelOpen,
                 ),
               ),
-        Row(mainAxisSize: MainAxisSize.min, children: actions),
+        Row(mainAxisSize: MainAxisSize.min, spacing: AppSpacing.sm, children: actions),
       ],
     );
   }

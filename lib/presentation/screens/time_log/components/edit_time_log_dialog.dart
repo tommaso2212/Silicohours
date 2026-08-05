@@ -15,6 +15,7 @@ class EditTimeLogDialog extends HookWidget {
   Widget build(BuildContext context) {
     final hoursController = useTextEditingController();
     final descriptionController = useTextEditingController();
+    final date = useState(timeLog.date);
 
     useEffect(() {
       hoursController.text = timeLog.hoursLogged % 1 == 0
@@ -32,6 +33,7 @@ class EditTimeLogDialog extends HookWidget {
     void submit() {
       Navigator.of(context).pop<EditTimeLogInput>((
         id: timeLog.id,
+        date: date.value,
         hoursLogged: double.parse(hoursController.text.trim()),
         description: descriptionController.text.trim().isEmpty ? null : descriptionController.text.trim(),
       ));
@@ -50,6 +52,7 @@ class EditTimeLogDialog extends HookWidget {
         spacing: AppSpacing.md,
         mainAxisSize: MainAxisSize.min,
         children: [
+          DatePicker(date: date.value, onChanged: (picked) => date.value = picked),
           TextField(
             controller: hoursController,
             autofocus: true,

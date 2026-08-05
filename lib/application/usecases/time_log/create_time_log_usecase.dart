@@ -6,6 +6,7 @@ typedef CreateTimeLogInput = ({
   String taskId,
   String userId,
   double hoursLogged,
+  DateTime date,
   String? description,
 });
 
@@ -26,6 +27,7 @@ class CreateTimeLogUsecase extends Usecase<TimeLog, CreateTimeLogInput> {
       taskId: input.taskId,
       userId: input.userId,
       hoursLogged: input.hoursLogged,
+      date: input.date,
       description: input.description,
     );
   }
