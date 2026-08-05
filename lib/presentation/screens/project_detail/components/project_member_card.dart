@@ -14,8 +14,9 @@ class ProjectMemberCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(child: UserName(userId: membership.userId, iconRadius: 16)),
+            UserName(userId: membership.userId, iconRadius: 16),
             ?actionMenu,
           ],
         ),

@@ -8,6 +8,7 @@ import 'package:silicohours/presentation/screens/project_detail/controller/proje
 import 'package:silicohours/presentation/screens/project_detail/sections/members_section.dart';
 import 'package:silicohours/presentation/screens/project_detail/sections/tasks_section.dart';
 import 'package:silicohours/presentation/services/dialog_service/dialog_service.dart';
+import 'package:silicohours/presentation/theme/app_breakpoints.dart';
 import 'package:silicohours/presentation/theme/app_spacing.dart';
 
 class ProjectDetailScreen extends HookConsumerWidget {
@@ -50,16 +51,25 @@ class ProjectDetailScreen extends HookConsumerWidget {
         SliverPadding(
           padding: const EdgeInsets.only(top: AppSpacing.lg),
           sliver: SliverToBoxAdapter(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: AppSpacing.lg,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: MembersSection(projectId: projectId, scrollController: scrollController),
-                ),
-                Expanded(child: TasksSection(projectId: projectId)),
-              ],
+            child: context.onMobile(
+              onMobile: () => Column(
+                spacing: AppSpacing.lg,
+                children: [
+                  TasksSection(projectId: projectId),
+                  MembersSection(projectId: projectId, scrollController: scrollController),
+                ],
+              ),
+              orElse: () => Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: AppSpacing.lg,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: MembersSection(projectId: projectId, scrollController: scrollController),
+                  ),
+                  Expanded(child: TasksSection(projectId: projectId)),
+                ],
+              ),
             ),
           ),
         ),

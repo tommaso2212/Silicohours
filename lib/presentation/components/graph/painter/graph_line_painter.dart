@@ -2,19 +2,21 @@ part of '../graph.dart';
 
 class GraphLinePainter extends CustomPainter with GraphGridPainter, GraphTooltipPainter {
   GraphLinePainter({
-    required this.values,
+    required this.series,
     this.colorBuilder,
     this.xGridDescriptionBuilder,
-    this.tooltipBuilder,
+    this.seriesTooltipBuilder,
     this.descriptionStyle,
     this.tooltipStyle,
     this.touchOffset,
   });
 
-  final List<double> values;
+  final List<List<double>> series;
+
+  /// Called with the series index (not the point index) to color each line.
   final Color Function(int index)? colorBuilder;
   final String Function(int index)? xGridDescriptionBuilder;
-  final String Function(int index)? tooltipBuilder;
+  final String Function(int seriesIndex, int valueIndex)? seriesTooltipBuilder;
 
   @override
   final TextStyle? descriptionStyle;
@@ -27,28 +29,43 @@ class GraphLinePainter extends CustomPainter with GraphGridPainter, GraphTooltip
 
   double get pointRadius => 8;
 
+  static const defaultSeriesColors = [
+    AppColors.primary,
+    AppColors.primaryLight,
+    AppColors.error,
+    AppColors.onSurfaceMuted,
+  ];
+
   @override
   bool get hasVerticalLines => false;
 
-  List<Offset> computePoints(Size size) {
-    final points = List<Offset>.empty(growable: true);
+  int get _pointCount => series.fold(0, (count, values) => max(count, values.length));
 
-    final heightPerValue = (size.height - descriptionPadding.vertical) / values.getUpperBound();
-    final width = (size.width - descriptionPadding.horizontal) / values.length;
+  Color _colorForSeries(int index) =>
+      colorBuilder?.call(index) ?? defaultSeriesColors[index % defaultSeriesColors.length];
 
-    for (var i = 0; i < values.length; i++) {
-      final x = descriptionPadding.left + i * width + width / 2;
-      final y = (size.height - descriptionPadding.vertical) - values[i] * heightPerValue;
+  List<List<Offset>> computeSeriesPoints(Size size) {
+    final upperBound = series.expand((values) => values).toList().getUpperBound();
+    final heightPerValue = (size.height - descriptionPadding.vertical) / upperBound;
+    final width = (size.width - descriptionPadding.horizontal) / _pointCount;
 
-      points.add(Offset(x, y));
-    }
-    return points;
+    return series.map((values) {
+      final points = List<Offset>.empty(growable: true);
+
+      for (var i = 0; i < values.length; i++) {
+        final x = descriptionPadding.left + i * width + width / 2;
+        final y = (size.height - descriptionPadding.vertical) - values[i] * heightPerValue;
+
+        points.add(Offset(x, y));
+      }
+      return points;
+    }).toList();
   }
 
-  void _paintLines(Canvas canvas, Size size, {required List<Offset> points}) {
+  void _paintLines(Canvas canvas, Size size, {required List<Offset> points, required Color color}) {
     final paint = Paint()
       ..strokeWidth = 2
-      ..color = AppColors.primary;
+      ..color = color;
 
     Offset? previousPoint;
 
@@ -61,33 +78,41 @@ class GraphLinePainter extends CustomPainter with GraphGridPainter, GraphTooltip
     }
   }
 
-  void _paintPoints(Canvas canvas, Size size, {required List<Offset> points}) {
-    final paint = Paint()..style = PaintingStyle.fill;
+  void _paintPoints(Canvas canvas, Size size, {required List<Offset> points, required Color color}) {
+    final paint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = color;
 
     for (var i = 0; i < points.length; i++) {
-      canvas.drawCircle(points[i], pointRadius, paint..color = (colorBuilder?.call(i) ?? AppColors.primary));
+      canvas.drawCircle(points[i], pointRadius, paint);
     }
   }
 
-  void paintGraph(Canvas canvas, Size size, {required List<Offset> points}) {
-    _paintLines(canvas, size, points: points);
-    _paintPoints(canvas, size, points: points);
+  void paintGraph(Canvas canvas, Size size, {required List<List<Offset>> seriesPoints}) {
+    for (var s = 0; s < seriesPoints.length; s++) {
+      final color = _colorForSeries(s);
+      _paintLines(canvas, size, points: seriesPoints[s], color: color);
+      _paintPoints(canvas, size, points: seriesPoints[s], color: color);
+    }
   }
 
-  void paintGraphTooltip(Canvas canvas, Size size, {required List<Offset> points}) {
-    if (tooltipBuilder == null) return;
-    for (var i = 0; i < points.length; i++) {
-      paintTooltip(
-        canvas,
-        size,
-        tooltip: tooltipBuilder!.call(i),
-        showTooltip: () => isInCirle(center: points[i], radius: pointRadius),
-      );
+  void paintGraphTooltip(Canvas canvas, Size size, {required List<List<Offset>> seriesPoints}) {
+    if (seriesTooltipBuilder == null) return;
+    for (var s = 0; s < seriesPoints.length; s++) {
+      final points = seriesPoints[s];
+      for (var i = 0; i < points.length; i++) {
+        paintTooltip(
+          canvas,
+          size,
+          tooltip: seriesTooltipBuilder!.call(s, i),
+          showTooltip: () => isInCirle(center: points[i], radius: pointRadius),
+        );
+      }
     }
   }
 
   void paintGrid(Canvas canvas, Size size, {double yStepNumber = 4}) {
-    final maxValue = values.getUpperBound();
+    final maxValue = series.expand((values) => values).toList().getUpperBound();
     final minValue = 0;
 
     final partial = (maxValue - minValue) / yStepNumber;
@@ -98,7 +123,7 @@ class GraphLinePainter extends CustomPainter with GraphGridPainter, GraphTooltip
       yDescriptionBuilder: (index) => '${maxValue - index * partial}',
       xDescriptionBuilder: xGridDescriptionBuilder,
       horizontalSteps: yStepNumber.toDouble(),
-      verticalSteps: values.length.toDouble(),
+      verticalSteps: _pointCount.toDouble(),
     );
   }
 
@@ -106,11 +131,11 @@ class GraphLinePainter extends CustomPainter with GraphGridPainter, GraphTooltip
   void paint(Canvas canvas, Size size) {
     paintGrid(canvas, size);
 
-    final points = computePoints(size);
+    final seriesPoints = computeSeriesPoints(size);
 
-    paintGraph(canvas, size, points: points);
+    paintGraph(canvas, size, seriesPoints: seriesPoints);
 
-    paintGraphTooltip(canvas, size, points: points);
+    paintGraphTooltip(canvas, size, seriesPoints: seriesPoints);
   }
 
   @override

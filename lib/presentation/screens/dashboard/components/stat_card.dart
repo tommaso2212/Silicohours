@@ -13,7 +13,7 @@ class StatCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16),
         child: Wrap(
           spacing: 16,
           runSpacing: 8,
