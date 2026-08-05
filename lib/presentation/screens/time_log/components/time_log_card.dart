@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/adapters/project/project_name.dart';
 import 'package:silicohours/presentation/adapters/task/task_name.dart';
+import 'package:silicohours/presentation/adapters/timelog/timelog_date.dart';
 import 'package:silicohours/presentation/adapters/timelog/timelog_hours_logged.dart';
 import 'package:silicohours/presentation/adapters/user/user_name.dart';
 import 'package:silicohours/presentation/theme/app_colors.dart';
@@ -36,7 +37,7 @@ class TimeLogCard extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: AppSpacing.sm,
                         children: [
-                          Row(
+                          Wrap(
                             spacing: AppSpacing.sm,
                             children: [
                               TimelogHoursLogged(timeLog: timeLog),
@@ -53,7 +54,15 @@ class TimeLogCard extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    UserName(userId: timeLog.userId, showRole: false),
+                    Column(
+                      spacing: AppSpacing.sm,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TimelogDate(timeLog: timeLog),
+                        UserName(userId: timeLog.userId, showRole: false),
+                      ],
+                    ),
                     ?actionMenu,
                   ],
                 ),

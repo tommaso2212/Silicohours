@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:silicohours/domain/domain.dart';
 import 'package:silicohours/presentation/adapters/project/project_name.dart';
 import 'package:silicohours/presentation/adapters/task/task_name.dart';
+import 'package:silicohours/presentation/adapters/timelog/timelog_date.dart';
 import 'package:silicohours/presentation/adapters/timelog/timelog_hours_logged.dart';
 import 'package:silicohours/presentation/adapters/user/user_name.dart';
 import 'package:silicohours/presentation/components/components.dart';
@@ -18,7 +19,7 @@ class TimeLogsSection extends ConsumerWidget {
 
   final ScrollController scrollController;
 
-  static const _columns = ['Project', 'Task', 'User', 'Hours', 'Description', ''];
+  static const _columns = ['Date', 'Project', 'Task', 'User', 'Hours', 'Description', ''];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,15 +42,16 @@ class TimeLogsSection extends ConsumerWidget {
             columnsNumber: _columns.length,
             headerBuilder: (index) => Text(_columns[index]),
             cellBuilder: (index, timeLog) => switch (index) {
-              0 => ProjectName(projectId: timeLog.projectId),
-              1 => TaskName(projectId: timeLog.projectId, taskId: timeLog.taskId),
-              2 => UserName(userId: timeLog.userId, showRole: false),
-              3 => TimelogHoursLogged(timeLog: timeLog),
-              4 => Text(
+              0 => TimelogDate(timeLog: timeLog),
+              1 => ProjectName(projectId: timeLog.projectId),
+              2 => TaskName(projectId: timeLog.projectId, taskId: timeLog.taskId),
+              3 => UserName(userId: timeLog.userId, showRole: false),
+              4 => TimelogHoursLogged(timeLog: timeLog),
+              5 => Text(
                 timeLog.description ?? '—',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.onSurfaceMuted),
               ),
-              5 => Align(
+              6 => Align(
                 alignment: Alignment.centerRight,
                 child: _TimeLogActionMenu(timeLog: timeLog),
               ),

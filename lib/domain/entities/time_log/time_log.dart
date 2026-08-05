@@ -14,3 +14,8 @@ abstract class TimeLog with _$TimeLog {
     String? description,
   }) = _TimeLog;
 }
+
+extension TimeLogFormatter on TimeLog {
+  String get formatDate =>
+      '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year.toString().padLeft(4, '0')}';
+}
